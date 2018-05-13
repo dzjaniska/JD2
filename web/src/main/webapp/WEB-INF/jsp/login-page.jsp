@@ -5,7 +5,9 @@
 </head>
 <body>
 <form action="/login-page" method="get">
-    <input type="text" value="${requestScope.username}">
+    <input type="text" value="${requestScope.admin}"><br>
+    <input type="text" value="${requestScope.admin.userInfo.surname}"><br>
+    <input type="text" value="${requestScope.admin.userInfo.secondName}"><br>
     <input type="submit">
 </form>
 </body>
