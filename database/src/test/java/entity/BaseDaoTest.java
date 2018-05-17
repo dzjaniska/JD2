@@ -1,10 +1,10 @@
-package dao;
+package entity;
 
-import entity.BaseEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.junit.AfterClass;
+import org.junit.After;
+import org.junit.Before;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,10 +14,15 @@ import static org.junit.Assert.assertNotNull;
 
 public class BaseDaoTest {
 
-    protected static final SessionFactory FACTORY = new Configuration().configure().buildSessionFactory();
+    public static SessionFactory FACTORY;
 
-    @AfterClass
-    public static void after() {
+    @Before
+    public void before() {
+        FACTORY = new Configuration().configure().buildSessionFactory();
+    }
+
+    @After
+    public void after() {
         FACTORY.close();
     }
 
@@ -39,11 +44,10 @@ public class BaseDaoTest {
         }
     }
 
-    public <T extends BaseEntity<?>> void find(T... object) {
+    public <T extends BaseEntity<?>> void find(T savedObject) {
         try (Session session = FACTORY.openSession()) {
             session.beginTransaction();
-            T savedEntity = save(object);
-            BaseEntity baseEntity = session.find(savedEntity.getClass(), savedEntity.getId());
+            BaseEntity baseEntity = session.find(savedObject.getClass(), savedObject.getId());
             assertNotNull("Entity is not found", baseEntity.getId());
 
             session.getTransaction().commit();

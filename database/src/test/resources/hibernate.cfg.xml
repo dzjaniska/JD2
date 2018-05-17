@@ -18,12 +18,9 @@
         <mapping class="entity.Courier"/>
         <mapping class="entity.Customer"/>
         <mapping class="entity.Orders"/>
-        <mapping class="entity.OrderRoute"/>
         <mapping class="entity.Product"/>
         <mapping class="entity.ProductOrder"/>
         <mapping class="entity.Review"/>
-        <mapping class="entity.ReviewProduct"/>
-        <mapping class="entity.ReviewShop"/>
         <mapping class="entity.Route"/>
         <mapping class="entity.Shop"/>
         <mapping class="entity.ShopProduct"/>

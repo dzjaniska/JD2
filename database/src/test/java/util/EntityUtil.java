@@ -13,12 +13,13 @@ import entity.Shop;
 import entity.Status;
 import entity.User;
 import entity.UserInfo;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EntityUtil {
 
     public static UserInfo createUserInfo() {

@@ -1,6 +1,5 @@
-package dao;
+package entity;
 
-import entity.Shop;
 import org.hibernate.Session;
 import org.junit.Test;
 import util.EntityUtil;
@@ -19,7 +18,9 @@ public class ShopTest extends BaseDaoTest {
     public void checkFind() {
         try (Session session = FACTORY.openSession()) {
             Shop shop = EntityUtil.createShop();
-            find(shop);
+            Shop savedEntity = save(shop);
+
+            find(savedEntity);
         }
     }
 }

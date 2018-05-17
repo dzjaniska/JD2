@@ -1,8 +1,5 @@
-package dao;
+package entity;
 
-import entity.Customer;
-import entity.Review;
-import entity.UserInfo;
 import org.hibernate.Session;
 import org.junit.Test;
 import util.EntityUtil;
@@ -25,7 +22,9 @@ public class ReviewTest extends BaseDaoTest {
             UserInfo userInfo = EntityUtil.createUserInfo();
             Customer customer = EntityUtil.createCustomer(userInfo);
             Review review = EntityUtil.createReview(customer);
-            find(userInfo, customer, review);
+            BaseEntity<Long> savedEntity = save(userInfo, customer, review);
+
+            find(savedEntity);
         }
     }
 }

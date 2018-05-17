@@ -11,7 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "route", schema = "shop")
@@ -30,15 +31,18 @@ public class Route extends BaseEntity<Long> {
     @JoinColumn(name = "courier_id")
     private User user;
 
-    @Column(name = "date", nullable = false, unique = false)
+    @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "status", nullable = false, unique = false)
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToMany(mappedBy = "route")
-    private Set<OrderRoute> orders;
+    @ManyToMany
+    @JoinTable(name = "order_route", schema = "shop",
+            joinColumns = {@JoinColumn(name = "route_id")},
+            inverseJoinColumns = {@JoinColumn(name = "order_id")})
+    private Set<Orders> orders;
 
     public Route(User user, LocalDate date, Status status) {
         this.user = user;

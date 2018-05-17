@@ -1,8 +1,5 @@
-package dao;
+package entity;
 
-import entity.Courier;
-import entity.Orders;
-import entity.UserInfo;
 import org.hibernate.Session;
 import org.junit.Test;
 import util.EntityUtil;
@@ -25,7 +22,9 @@ public class OrdersTest extends BaseDaoTest {
             UserInfo userInfo = EntityUtil.createUserInfo();
             Courier courier = EntityUtil.createCourier(userInfo);
             Orders orders = EntityUtil.createOrder(courier);
-            find(userInfo, courier, orders);
+            BaseEntity<Long> savedEntity = save(userInfo, courier, orders);
+
+            find(savedEntity);
         }
     }
 }

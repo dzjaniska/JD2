@@ -14,14 +14,14 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "customer", schema = "shop")
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Customer extends User {
 
-    @Column(name = "address", nullable = false, unique = false)
+    @Column(name = "address", nullable = false)
     private String address;
 
     public Customer(String login, String password, Role role, UserInfo userInfo, String address) {

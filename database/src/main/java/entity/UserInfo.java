@@ -13,19 +13,19 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user_info", schema = "shop")
 public class UserInfo extends BaseEntity<Long> {
 
-    @Column(name = "name", nullable = false, unique = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "surname", nullable = true, unique = false)
+    @Column(name = "surname")
     private String surname;
 
-    @Column(name = "second_name", nullable = true, unique = false)
+    @Column(name = "second_name")
     private String secondName;
 }
 

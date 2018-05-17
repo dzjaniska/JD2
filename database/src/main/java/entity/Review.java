@@ -16,19 +16,19 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "review", schema = "shop")
 public class Review extends BaseEntity<Long> {
 
-    @Column(name = "text", nullable = false, unique = false)
+    @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name = "rating", nullable = false, unique = false)
+    @Column(name = "rating", nullable = false)
     private Integer rating;
 
-    @Column(name = "date", nullable = false, unique = false)
+    @Column(name = "date", nullable = false)
     private LocalDate date;
 
     @OneToOne

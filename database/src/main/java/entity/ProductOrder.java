@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "product_order", schema = "shop")
@@ -29,6 +29,6 @@ public class ProductOrder extends BaseEntity<Long> {
     @JoinColumn(name = "order_id")
     private Orders orders;
 
-    @Column(name = "quantity", nullable = false, unique = false)
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
 }

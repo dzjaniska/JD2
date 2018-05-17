@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:postgresql://localhost:5432/test_database</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/shop_database</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="connection.username">postgres</property>
         <property name="connection.password">pass1</property>
@@ -16,12 +16,9 @@
         <mapping class="entity.Courier"/>
         <mapping class="entity.Customer"/>
         <mapping class="entity.Orders"/>
-        <mapping class="entity.OrderRoute"/>
         <mapping class="entity.Product"/>
         <mapping class="entity.ProductOrder"/>
         <mapping class="entity.Review"/>
-        <mapping class="entity.ReviewProduct"/>
-        <mapping class="entity.ReviewShop"/>
         <mapping class="entity.Route"/>
         <mapping class="entity.Shop"/>
         <mapping class="entity.ShopProduct"/>

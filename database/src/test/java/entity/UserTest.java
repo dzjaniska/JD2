@@ -1,10 +1,5 @@
-package dao;
+package entity;
 
-import entity.Admin;
-import entity.Courier;
-import entity.Customer;
-import entity.Shop;
-import entity.UserInfo;
 import org.hibernate.Session;
 import org.junit.Test;
 import util.EntityUtil;
@@ -27,7 +22,9 @@ public class UserTest extends BaseDaoTest {
             UserInfo userInfo = EntityUtil.createUserInfo();
             Shop shop = EntityUtil.createShop();
             Admin admin = EntityUtil.createAdmin(userInfo, shop);
-            find(userInfo, shop, admin);
+            BaseEntity<Long> savedEntity = save(userInfo, shop, admin);
+
+            find(savedEntity);
         }
     }
 
@@ -45,7 +42,9 @@ public class UserTest extends BaseDaoTest {
         try (Session session = FACTORY.openSession()) {
             UserInfo userInfo = EntityUtil.createUserInfo();
             Customer customer = EntityUtil.createCustomer(userInfo);
-            find(userInfo, customer);
+            BaseEntity<Long> savedEntity = save(userInfo, customer);
+
+            find(savedEntity);
         }
     }
 
@@ -63,7 +62,9 @@ public class UserTest extends BaseDaoTest {
         try (Session session = FACTORY.openSession()) {
             UserInfo userInfo = EntityUtil.createUserInfo();
             Courier courier = EntityUtil.createCourier(userInfo);
-            find(userInfo, courier);
+            BaseEntity<Long> savedEntity = save(userInfo, courier);
+
+            find(savedEntity);
         }
     }
 }

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user", schema = "shop")
@@ -29,10 +29,10 @@ public abstract class User extends BaseEntity<Long> {
     @Column(name = "login", nullable = false, unique = true)
     private String login;
 
-    @Column(name = "password", nullable = false, unique = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "role", nullable = false, unique = false)
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
