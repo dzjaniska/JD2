@@ -1,8 +1,8 @@
-package project;
-
-import static org.junit.Assert.assertTrue;
+package by.ivanov;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for simple App.

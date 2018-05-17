@@ -20,6 +20,7 @@ tomcat
 *.war
 *.ear
 *.sar
+*.log
 *.class
 
 # Maven
