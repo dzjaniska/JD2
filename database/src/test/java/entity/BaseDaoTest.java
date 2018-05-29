@@ -54,6 +54,16 @@ public class BaseDaoTest {
         }
     }
 
+    /*public <T extends BaseEntity<?>> void findAll() {
+        try (Session session = FACTORY.openSession()) {
+            session.beginTransaction();
+            BaseEntity baseEntity = session.find(savedObject.getClass(), savedObject.getId());
+            assertNotNull("Entity is not found", baseEntity.getId());
+
+            session.getTransaction().commit();
+        }
+    }*/
+
     private <T extends BaseEntity<?>> T getSavedEntity(List<T> objectList) {
         return objectList.get(objectList.size() - 1);
     }

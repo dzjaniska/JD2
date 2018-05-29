@@ -10,16 +10,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = "reviews")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "product", schema = "shop")
@@ -35,11 +34,11 @@ public class Product extends BaseEntity<Long> {
     @Column(name = "image", nullable = false)
     private String image;
 
-    @ManyToMany
-    @JoinTable(name = "review_product", schema = "shop",
-            joinColumns = {@JoinColumn(name = "product_id")},
-            inverseJoinColumns = {@JoinColumn(name = "review_id")})
-    private Set<Review> reviews;
+    @OneToMany(mappedBy = "product")
+    private Set<Option> options;
+
+    @ManyToMany(mappedBy = "product")
+    private Set<ReviewProduct> reviews;
 
     public Product(Category category, String description, String image) {
         this.category = category;
