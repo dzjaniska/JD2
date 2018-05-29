@@ -5,11 +5,11 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ShopDao extends BaseDao<Long, Shop> {
+public class ShopDaoImpl extends BaseBaseDao<Long, Shop> {
 
-    private static final ShopDao INSTANCE = new ShopDao();
+    private static final ShopDaoImpl INSTANCE = new ShopDaoImpl();
 
-    public static ShopDao getInstance() {
+    public static ShopDaoImpl getInstance() {
         return INSTANCE;
     }
 }

@@ -1,4 +1,4 @@
-package dao;
+package dao.interfaces;
 
 import entity.BaseEntity;
 import entity.Category;

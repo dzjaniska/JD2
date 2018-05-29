@@ -5,11 +5,11 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class AdminDao extends BaseDao<Long, Admin> {
+public class AdminDaoImpl extends BaseBaseDao<Long, Admin> {
 
-    private static final AdminDao INSTANCE = new AdminDao();
+    private static final AdminDaoImpl INSTANCE = new AdminDaoImpl();
 
-    public static AdminDao getInstance() {
+    public static AdminDaoImpl getInstance() {
         return INSTANCE;
     }
 }

@@ -56,10 +56,14 @@ CREATE TABLE shop_product (
 );
 
 CREATE TABLE option (
-  id         BIGSERIAL PRIMARY KEY,
-  product_id BIGINT                 NOT NULL   REFERENCES product (id),
-  name       CHARACTER VARYING(64)  NOT NULL,
-  value      CHARACTER VARYING(128) NOT NULL
+  id    BIGSERIAL PRIMARY KEY,
+  name  CHARACTER VARYING(64)  NOT NULL,
+  value CHARACTER VARYING(128) NOT NULL
+);
+
+CREATE TABLE option_shop (
+  product_id BIGINT NOT NULL   REFERENCES product (id),
+  option_id  BIGINT NOT NULL   REFERENCES option (id)
 );
 
 CREATE TABLE review (
@@ -105,16 +109,4 @@ CREATE TABLE route (
 CREATE TABLE order_route (
   order_id BIGINT NOT NULL REFERENCES orders (id),
   route_id BIGINT NOT NULL REFERENCES route (id)
-);
-
-INSERT INTO user_info (name, surname, second_name) VALUES (
-  'test_name', 'test_surname', 'test_second_name'
-);
-
-INSERT INTO "user" (login, password, role, user_info_id) VALUES (
-  'test_login', 'test_password', 'CUSTOMER', 1
-);
-
-INSERT INTO "orders" (user_id, order_time, delivery_time, status) VALUES (
-  1, '2018-05-19 22:38:46.137000', '2018-05-19 22:38:46.137000', 'PROCESSING'
 );

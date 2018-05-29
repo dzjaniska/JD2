@@ -1,5 +1,6 @@
 package dao;
 
+import dao.interfaces.BaseDao;
 import entity.BaseEntity;
 import manager.SessionFactoryManager;
 import org.hibernate.Session;
@@ -9,14 +10,14 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public class BaseDao<PK extends Serializable, T extends BaseEntity<PK>> implements DaoInterface<PK, T> {
+public class BaseBaseDao<PK extends Serializable, T extends BaseEntity<PK>> implements BaseDao<PK, T> {
 
     protected static final SessionFactory SESSION_FACTORY = SessionFactoryManager.getSessionFactory();
 
     private Class<T> clazz;
 
     @SuppressWarnings("unchecked")
-    public BaseDao() {
+    public BaseBaseDao() {
         ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
         this.clazz = (Class<T>) type.getActualTypeArguments()[1];
     }

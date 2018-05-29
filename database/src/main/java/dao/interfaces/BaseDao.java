@@ -1,11 +1,11 @@
-package dao;
+package dao.interfaces;
 
 import entity.BaseEntity;
 
 import java.io.Serializable;
 import java.util.List;
 
-public interface DaoInterface<PK extends Serializable, T extends BaseEntity<PK>> {
+public interface BaseDao<PK extends Serializable, T extends BaseEntity<PK>> {
 
     PK save(T object);
 

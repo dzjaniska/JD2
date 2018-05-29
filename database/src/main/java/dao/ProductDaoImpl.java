@@ -1,5 +1,6 @@
 package dao;
 
+import dao.interfaces.ProductDaoInterface;
 import entity.Category;
 import entity.Option;
 import entity.Product;
@@ -13,11 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ProductDao extends BaseDao<Long, Product> implements ProductDaoInterface<Long, Product> {
+public class ProductDaoImpl extends BaseBaseDao<Long, Product> implements ProductDaoInterface<Long, Product> {
 
-    private static final ProductDao INSTANCE = new ProductDao();
+    private static final ProductDaoImpl INSTANCE = new ProductDaoImpl();
 
-    public static ProductDao getInstance() {
+    public static ProductDaoImpl getInstance() {
         return INSTANCE;
     }
 

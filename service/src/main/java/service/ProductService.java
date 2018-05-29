@@ -1,6 +1,6 @@
 package service;
 
-import dao.ProductDao;
+import dao.ProductDaoImpl;
 import entity.Category;
 import entity.Product;
 import lombok.AccessLevel;
@@ -13,7 +13,7 @@ public class ProductService {
     private static final ProductService INSTANCE = new ProductService();
 
     public List<Product> getProductsPagination(Category category, Integer start, Integer finish) {
-        return ProductDao.getInstance().findCategoryProductPagination(category, start, finish);
+        return ProductDaoImpl.getInstance().findCategoryProductPagination(category, start, finish);
     }
 
     public static ProductService getInstance() {

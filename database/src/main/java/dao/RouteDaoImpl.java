@@ -5,11 +5,11 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RouteDao extends BaseDao<Long, Route> {
+public class RouteDaoImpl extends BaseBaseDao<Long, Route> {
 
-    private static final RouteDao INSTANCE = new RouteDao();
+    private static final RouteDaoImpl INSTANCE = new RouteDaoImpl();
 
-    public static RouteDao getInstance() {
+    public static RouteDaoImpl getInstance() {
         return INSTANCE;
     }
 }
