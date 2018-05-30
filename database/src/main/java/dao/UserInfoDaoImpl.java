@@ -1,15 +1,9 @@
 package dao;
 
 import entity.UserInfo;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserInfoDaoImpl extends BaseBaseDao<Long, UserInfo> {
+@Repository
+public class UserInfoDaoImpl extends BaseDaoImpl<Long, UserInfo> {
 
-    private static final UserInfoDaoImpl INSTANCE = new UserInfoDaoImpl();
-
-    public static UserInfoDaoImpl getInstance() {
-        return INSTANCE;
-    }
 }

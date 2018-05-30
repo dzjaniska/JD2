@@ -10,9 +10,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,9 +27,8 @@ public class Option extends BaseEntity<Long> {
     @Enumerated(EnumType.STRING)
     private Parameter name;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @ManyToMany(mappedBy = "options")
+    private Set<Product> products;
 
     @Column(name = "value", nullable = false)
     private String value;
@@ -38,4 +37,6 @@ public class Option extends BaseEntity<Long> {
         this.name = name;
         this.value = value;
     }
+
+
 }

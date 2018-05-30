@@ -1,15 +1,9 @@
 package dao;
 
+import dao.interfaces.RouteDao;
 import entity.Route;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RouteDaoImpl extends BaseBaseDao<Long, Route> {
-
-    private static final RouteDaoImpl INSTANCE = new RouteDaoImpl();
-
-    public static RouteDaoImpl getInstance() {
-        return INSTANCE;
-    }
+@Repository
+public class RouteDaoImpl extends BaseDaoImpl<Long, Route> implements RouteDao {
 }

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true,exclude = "shop")
+@ToString(callSuper = true, exclude = "shop")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "admin", schema = "shop")

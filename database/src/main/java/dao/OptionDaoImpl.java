@@ -1,15 +1,9 @@
 package dao;
 
+import dao.interfaces.OptionDao;
 import entity.Option;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class OptionDaoImpl extends BaseBaseDao<Long, Option> {
-
-    private static final OptionDaoImpl INSTANCE = new OptionDaoImpl();
-
-    public static OptionDaoImpl getInstance() {
-        return INSTANCE;
-    }
+@Repository
+public class OptionDaoImpl extends BaseDaoImpl<Long, Option> implements OptionDao {
 }

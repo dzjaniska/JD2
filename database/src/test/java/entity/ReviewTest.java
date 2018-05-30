@@ -6,7 +6,7 @@ import util.EntityUtil;
 
 import java.util.HashSet;
 
-public class ReviewTest extends BaseDaoTest {
+public class ReviewTest extends BaseEntityTest {
 
     @Test
     public void checkReviewShopSave() {

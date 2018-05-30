@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
-//@ComponentScan(basePackages = "")
+@ComponentScan
 @PropertySource("classpath:database.properties")
 @EnableTransactionManagement
 public class ApplicationConfiguration {
@@ -44,7 +44,7 @@ public class ApplicationConfiguration {
                                                            Properties hibernateProperties) {
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource);
-        localSessionFactoryBean.setPackagesToScan("com.matveyenka.spring.entity");
+        localSessionFactoryBean.setPackagesToScan("entity");
 
         localSessionFactoryBean.setHibernateProperties(hibernateProperties);
 

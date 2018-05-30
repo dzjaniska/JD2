@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.junit.Test;
 import util.EntityUtil;
 
-public class OrdersTest extends BaseDaoTest {
+public class OrdersTest extends BaseEntityTest {
 
     @Test
     public void checkSave() {

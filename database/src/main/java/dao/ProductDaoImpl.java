@@ -1,30 +1,23 @@
 package dao;
 
-import dao.interfaces.ProductDaoInterface;
+import dao.interfaces.ProductDao;
 import entity.Category;
 import entity.Option;
 import entity.Product;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ProductDaoImpl extends BaseBaseDao<Long, Product> implements ProductDaoInterface<Long, Product> {
-
-    private static final ProductDaoImpl INSTANCE = new ProductDaoImpl();
-
-    public static ProductDaoImpl getInstance() {
-        return INSTANCE;
-    }
+@Repository
+public class ProductDaoImpl extends BaseDaoImpl<Long, Product> implements ProductDao {
 
     @Override
     public List<Product> findParametrizedProduct(Category category, Option... options) {
-        try (Session session = SESSION_FACTORY.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
 
             int count = options.length;
             Map<Product, Integer> productHashMap = getAllProducts(category, session, options);
@@ -35,7 +28,7 @@ public class ProductDaoImpl extends BaseBaseDao<Long, Product> implements Produc
 
     @Override
     public List<Product> findCategoryProductPagination(Category category, Integer start, Integer finish) {
-        try (Session session = SESSION_FACTORY.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
 
             return session.createQuery("select p from Product p join p.options o where p.category= :category", Product.class)
                     .setParameter("category", category)

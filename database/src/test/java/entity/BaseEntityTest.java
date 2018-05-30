@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 
-public class BaseDaoTest {
+public class BaseEntityTest {
 
     public static SessionFactory FACTORY;
 
@@ -53,16 +53,6 @@ public class BaseDaoTest {
             session.getTransaction().commit();
         }
     }
-
-    /*public <T extends BaseEntity<?>> void findAll() {
-        try (Session session = FACTORY.openSession()) {
-            session.beginTransaction();
-            BaseEntity baseEntity = session.find(savedObject.getClass(), savedObject.getId());
-            assertNotNull("Entity is not found", baseEntity.getId());
-
-            session.getTransaction().commit();
-        }
-    }*/
 
     private <T extends BaseEntity<?>> T getSavedEntity(List<T> objectList) {
         return objectList.get(objectList.size() - 1);

@@ -1,15 +1,10 @@
 package dao;
 
+import dao.interfaces.CustomerDao;
 import entity.Customer;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CustomerDaoImpl extends BaseBaseDao<Long, Customer> {
+@Repository
+public class CustomerDaoImpl extends BaseDaoImpl<Long, Customer> implements CustomerDao {
 
-    private static final CustomerDaoImpl INSTANCE = new CustomerDaoImpl();
-
-    public static CustomerDaoImpl getInstance() {
-        return INSTANCE;
-    }
 }

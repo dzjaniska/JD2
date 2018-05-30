@@ -61,7 +61,7 @@ CREATE TABLE option (
   value CHARACTER VARYING(128) NOT NULL
 );
 
-CREATE TABLE option_shop (
+CREATE TABLE option_product (
   product_id BIGINT NOT NULL   REFERENCES product (id),
   option_id  BIGINT NOT NULL   REFERENCES option (id)
 );

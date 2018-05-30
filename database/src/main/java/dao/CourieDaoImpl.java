@@ -1,15 +1,10 @@
 package dao;
 
+import dao.interfaces.CourierDao;
 import entity.Courier;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CourieDaoImpl extends BaseBaseDao<Long, Courier> {
+@Repository
+public class CourieDaoImpl extends BaseDaoImpl<Long, Courier> implements CourierDao {
 
-    private static final CourieDaoImpl INSTANCE = new CourieDaoImpl();
-
-    public static CourieDaoImpl getInstance() {
-        return INSTANCE;
-    }
 }

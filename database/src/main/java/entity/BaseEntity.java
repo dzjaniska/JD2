@@ -19,4 +19,8 @@ public class BaseEntity<PK extends Serializable> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private PK id;
+
+    public PK getId() {
+        return id;
+    }
 }

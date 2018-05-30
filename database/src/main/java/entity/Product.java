@@ -10,8 +10,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
@@ -34,7 +35,10 @@ public class Product extends BaseEntity<Long> {
     @Column(name = "image", nullable = false)
     private String image;
 
-    @OneToMany(mappedBy = "product")
+    @ManyToMany
+    @JoinTable(name = "option_product", schema = "shop",
+            joinColumns = {@JoinColumn(name = "product_id")},
+            inverseJoinColumns = {@JoinColumn(name = "option_id")})
     private Set<Option> options;
 
     @ManyToMany(mappedBy = "product")

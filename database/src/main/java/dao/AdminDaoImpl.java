@@ -1,15 +1,10 @@
 package dao;
 
+import dao.interfaces.AdminDao;
 import entity.Admin;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class AdminDaoImpl extends BaseBaseDao<Long, Admin> {
+@Repository
+public class AdminDaoImpl extends BaseDaoImpl<Long, Admin> implements AdminDao {
 
-    private static final AdminDaoImpl INSTANCE = new AdminDaoImpl();
-
-    public static AdminDaoImpl getInstance() {
-        return INSTANCE;
-    }
 }

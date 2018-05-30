@@ -1,14 +1,12 @@
 package dao.interfaces;
 
-import entity.BaseEntity;
 import entity.Category;
 import entity.Option;
 import entity.Product;
 
-import java.io.Serializable;
 import java.util.List;
 
-public interface ProductDaoInterface<PK extends Serializable, T extends BaseEntity<PK>> {
+public interface ProductDao extends BaseDao<Long, Product> {
 
     List<Product> findParametrizedProduct(Category category, Option... options);
 

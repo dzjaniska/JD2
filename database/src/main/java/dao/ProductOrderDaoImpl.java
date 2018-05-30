@@ -1,15 +1,9 @@
 package dao;
 
+import dao.interfaces.ProductOrderDao;
 import entity.ProductOrder;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ProductOrderDaoImpl extends BaseBaseDao<Long, ProductOrder> {
-
-    private static final ProductOrderDaoImpl INSTANCE = new ProductOrderDaoImpl();
-
-    public static ProductOrderDaoImpl getInstance() {
-        return INSTANCE;
-    }
+@Repository
+public class ProductOrderDaoImpl extends BaseDaoImpl<Long, ProductOrder> implements ProductOrderDao {
 }

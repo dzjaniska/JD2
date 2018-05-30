@@ -1,15 +1,9 @@
 package dao;
 
+import dao.interfaces.ReviewShopDao;
 import entity.ReviewShop;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Repository;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ReviewShopDaoImpl extends BaseBaseDao<Long, ReviewShop> {
-
-    private static final ReviewShopDaoImpl INSTANCE = new ReviewShopDaoImpl();
-
-    public static ReviewShopDaoImpl getInstance() {
-        return INSTANCE;
-    }
+@Repository
+public class ReviewShopDaoImpl extends BaseDaoImpl<Long, ReviewShop> implements ReviewShopDao {
 }
