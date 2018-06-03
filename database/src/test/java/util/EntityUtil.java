@@ -7,7 +7,8 @@ import entity.Courier;
 import entity.Customer;
 import entity.Orders;
 import entity.Product;
-import entity.Review;
+import entity.ReviewProduct;
+import entity.ReviewShop;
 import entity.Role;
 import entity.Shop;
 import entity.Status;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EntityUtil {
@@ -46,11 +48,15 @@ public final class EntityUtil {
         return new Orders(user, LocalDateTime.now(), LocalDateTime.now(), Status.PROCESSING);
     }
 
-    public static Review createReview(User user) {
-        return new Review("text", 5, LocalDate.now(), user);
-    }
-
     public static Product createProduct() {
         return new Product(Category.CPU, "description", "image_url");
+    }
+
+    public static ReviewShop createReviewShop(User user, Set<Shop> shop) {
+        return new ReviewShop("text", 5, LocalDate.now(), user, shop);
+    }
+
+    public static ReviewProduct createReviewProduct(User user, Set<Product> product) {
+        return new ReviewProduct("text", 5, LocalDate.now(), user, product);
     }
 }

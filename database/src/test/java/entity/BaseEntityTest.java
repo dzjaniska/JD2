@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 
-public class BaseDaoTest {
+public class BaseEntityTest {
 
     public static SessionFactory FACTORY;
 

@@ -31,4 +31,7 @@ public class ShopProduct extends BaseEntity<Long> {
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
+
+    @Column(name = "price", nullable = false)
+    private Integer price;
 }
