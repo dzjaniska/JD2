@@ -29,6 +29,10 @@ public class ProductOrder extends BaseEntity<Long> {
     @JoinColumn(name = "order_id")
     private Orders orders;
 
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
+
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 }
