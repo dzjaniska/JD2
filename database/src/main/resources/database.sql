@@ -49,9 +49,21 @@ CREATE TABLE product (
 
 CREATE TABLE shop_product (
   id         BIGSERIAL PRIMARY KEY,
+  product_id BIGINT  NOT NULL   REFERENCES product (id),
+  shop_id    BIGINT  NOT NULL REFERENCES shop (id),
+  quantity   INTEGER NOT NULL,
+  price      INTEGER NOT NULL
+);
+
+CREATE TABLE option (
+  id    BIGSERIAL PRIMARY KEY,
+  name  CHARACTER VARYING(64)  NOT NULL,
+  value CHARACTER VARYING(128) NOT NULL
+);
+
+CREATE TABLE option_product (
   product_id BIGINT NOT NULL   REFERENCES product (id),
-  shop_id    BIGINT NOT NULL REFERENCES shop (id),
-  quantity   INTEGER
+  option_id  BIGINT NOT NULL   REFERENCES option (id)
 );
 
 CREATE TABLE review (
@@ -63,15 +75,13 @@ CREATE TABLE review (
 );
 
 CREATE TABLE review_product (
-  id         BIGSERIAL PRIMARY KEY,
   product_id BIGINT NOT NULL REFERENCES product (id),
-  review_id  BIGINT NOT NULL REFERENCES review (id) UNIQUE
+  review_id  BIGINT NOT NULL REFERENCES review (id)
 );
 
 CREATE TABLE review_shop (
-  id        BIGSERIAL PRIMARY KEY,
   shop_id   BIGINT NOT NULL REFERENCES shop (id),
-  review_id BIGINT NOT NULL REFERENCES review (id) UNIQUE
+  review_id BIGINT NOT NULL REFERENCES review (id)
 );
 
 CREATE TABLE orders (
@@ -97,15 +107,6 @@ CREATE TABLE route (
 );
 
 CREATE TABLE order_route (
-  id       BIGSERIAL PRIMARY KEY,
   order_id BIGINT NOT NULL REFERENCES orders (id),
   route_id BIGINT NOT NULL REFERENCES route (id)
-);
-
-INSERT INTO user_info (name, surname, second_name) VALUES (
-  'test_name', 'test_surname', 'test_second_name'
-);
-
-INSERT INTO "user" (login, password, role, user_info_id) VALUES (
-  'test_login', 'test_password', 'ADMIN', 1
 );

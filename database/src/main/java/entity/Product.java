@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = "reviews")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "product", schema = "shop")
@@ -36,10 +36,13 @@ public class Product extends BaseEntity<Long> {
     private String image;
 
     @ManyToMany
-    @JoinTable(name = "review_product", schema = "shop",
+    @JoinTable(name = "option_product", schema = "shop",
             joinColumns = {@JoinColumn(name = "product_id")},
-            inverseJoinColumns = {@JoinColumn(name = "review_id")})
-    private Set<Review> reviews;
+            inverseJoinColumns = {@JoinColumn(name = "option_id")})
+    private Set<Option> options;
+
+    @ManyToMany(mappedBy = "product")
+    private Set<ReviewProduct> reviews;
 
     public Product(Category category, String description, String image) {
         this.category = category;
