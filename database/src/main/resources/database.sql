@@ -35,11 +35,6 @@ CREATE TABLE customer (
   address CHARACTER VARYING(256) NOT NULL
 );
 
-CREATE TABLE courier (
-  user_id  BIGINT                 NOT NULL UNIQUE REFERENCES "user" (id),
-  car_type CHARACTER VARYING(256) NOT NULL
-);
-
 CREATE TABLE product (
   id          BIGSERIAL PRIMARY KEY,
   category    CHARACTER VARYING(64)  NOT NULL,
@@ -86,27 +81,15 @@ CREATE TABLE review_shop (
 
 CREATE TABLE orders (
   id            BIGSERIAL PRIMARY KEY,
-  user_id       BIGINT                NOT NULL REFERENCES "user" (id),
-  order_time    TIMESTAMP             NOT NULL,
-  delivery_time TIMESTAMP             NOT NULL,
-  status        CHARACTER VARYING(16) NOT NULL
+  user_id       BIGINT    NOT NULL REFERENCES "user" (id),
+  order_time    TIMESTAMP NOT NULL,
+  delivery_time TIMESTAMP NOT NULL
 );
 
 CREATE TABLE product_order (
   id         BIGSERIAL PRIMARY KEY,
   product_id BIGINT  NOT NULL   REFERENCES product (id),
   order_id   BIGINT  NOT NULL REFERENCES orders (id),
+  shop_id    BIGINT  NOT NULL REFERENCES shop (id),
   quantity   INTEGER NOT NULL
-);
-
-CREATE TABLE route (
-  id         BIGSERIAL PRIMARY KEY,
-  courier_id BIGINT                NOT NULL REFERENCES "user" (id),
-  date       DATE                  NOT NULL,
-  status     CHARACTER VARYING(16) NOT NULL
-);
-
-CREATE TABLE order_route (
-  order_id BIGINT NOT NULL REFERENCES orders (id),
-  route_id BIGINT NOT NULL REFERENCES route (id)
 );

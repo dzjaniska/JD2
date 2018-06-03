@@ -1,22 +1,26 @@
 package service;
 
-import dao.ProductDaoImpl;
 import entity.Category;
+import entity.Option;
 import entity.Product;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import repository.ProductRepository;
 
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Service
 public class ProductService {
-    private static final ProductService INSTANCE = new ProductService();
 
-    public List<Product> getProductsPagination(Category category, Integer start, Integer finish) {
-        return ProductDaoImpl.getInstance().findCategoryProductPagination(category, start, finish);
+    private ProductRepository productRepository;
+
+    @Autowired
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
-    public static ProductService getInstance() {
-        return INSTANCE;
+    public List<Product> productPag(Category category, Option option, Integer startPrice, Integer endPrice, Integer page, Integer size) {
+        return productRepository.findDistinctAllByCategoryAndOptionsAndShopProductPriceBetween(category, option, startPrice, endPrice, PageRequest.of(page, size));
     }
 }

@@ -8,8 +8,6 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -37,20 +35,15 @@ public class Orders extends BaseEntity<Long> {
     @Column(name = "delivery_time")
     private LocalDateTime deliveryTime;
 
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
     @ManyToMany
     @JoinTable(name = "product_order", schema = "shop",
             joinColumns = {@JoinColumn(name = "order_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")})
     private List<Product> products;
 
-    public Orders(User user, LocalDateTime orderTime, LocalDateTime deliveryTime, Status status) {
+    public Orders(User user, LocalDateTime orderTime, LocalDateTime deliveryTime) {
         this.user = user;
         this.orderTime = orderTime;
         this.deliveryTime = deliveryTime;
-        this.status = status;
     }
 }
