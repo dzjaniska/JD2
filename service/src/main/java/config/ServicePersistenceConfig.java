@@ -3,6 +3,7 @@ package config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -20,50 +21,7 @@ import java.util.Properties;
 @Configuration
 @PropertySource({"classpath:database.properties", "classpath:hibernate.properties"})
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "repository")
-public class PersistenceConfig {
-
-    @Bean
-    public DataSource dataSource(@Value("${db.driver}") String driverName,
-                                 @Value("${db.url}") String url,
-                                 @Value("${db.user}") String username,
-                                 @Value("${db.password}") String password) {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driverName);
-        dataSource.setUrl(url);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
-
-        return dataSource;
-    }
-
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
-                                                                       Properties jpaProperties) {
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
-
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-        factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("entity");
-        factory.setDataSource(dataSource);
-        factory.setJpaProperties(jpaProperties);
-        return factory;
-    }
-
-    @Bean
-    public Properties jpaProperties(@Value("classpath:hibernate.properties") Resource hibernateProperties) throws IOException {
-        Properties properties = new Properties();
-        properties.load(hibernateProperties.getInputStream());
-
-        return properties;
-    }
-
-    @Bean
-    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory);
-
-        return transactionManager;
-    }
+@EnableJpaRepositories(basePackages = "service")
+@Import(PersistenceConfig.class)
+public class ServicePersistenceConfig {
 }
