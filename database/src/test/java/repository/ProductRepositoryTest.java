@@ -47,7 +47,7 @@ public class ProductRepositoryTest {
 
     @Test
     public void checkSave() {
-        Product product = new Product(Category.CPU, "cpuModelName", new HashSet<Option>(Arrays.asList(
+        Product product = new Product(Category.CPU, "cpuModelName", new HashSet<>(Arrays.asList(
                 new Option(Parameter.YEAR, "2018"),
                 new Option(Parameter.CAPACITY, "16GB"),
                 new Option(Parameter.PRODUCER, "AMD"))),
@@ -58,8 +58,8 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void checkFind() {
-        Optional<Product> product = productRepository.findById(29L);
+    public void checkFindByName() {
+        Optional<Product> product = productRepository.findFirstByDescription("cpuModelName1");
         assertNotNull(product.get());
     }
 
@@ -73,8 +73,8 @@ public class ProductRepositoryTest {
 
     @Test
     public void checkDelete() {
-        Optional<Product> product = productRepository.findById(38L);
-        productRepository.delete(product.get());
+        Product product = productRepository.findFirstByDescription("testProduct").get();
+        productRepository.delete(product);
 
         Iterable<Product> all = productRepository.findAll();
         int size = StreamSupport.stream(all.spliterator(), false).collect(Collectors.toList()).size();
@@ -84,8 +84,8 @@ public class ProductRepositoryTest {
 
     @Test
     public void checkUpdate() {
-        Product product = productRepository.findById(38L).get();
-        int updateProduct = productRepository.updateProduct("check", product);
+        Optional<Product> product = productRepository.findFirstByDescription("cpuModelName1");
+        int updateProduct = productRepository.updateProduct("check", product.get());
         final int expected = 1;
         assertEquals(expected, updateProduct);
     }
@@ -95,7 +95,7 @@ public class ProductRepositoryTest {
         Option option1 = optionRepository.findByNameAndValue(Parameter.YEAR, "2018");
         Option option2 = optionRepository.findByNameAndValue(Parameter.CAPACITY, "16GB");
         Option option3 = optionRepository.findByNameAndValue(Parameter.CASH, "1");
-        List<Product> productList = productRepository.findDistinctAllByCategoryAndOptionsIn(Category.RAM, option1, option2);
+        List<Product> productList = productRepository.findDistinctAllByCategoryAndOptionsIn(Category.RAM, option1, option2, option3);
         assertEquals("ramModelName1", productList.get(0).getDescription());
     }
 
@@ -105,5 +105,15 @@ public class ProductRepositoryTest {
         List<Product> all = productRepository.findDistinctAllByCategoryAndOptionsAndShopProductPriceBetween(Category.RAM, option1, 100, 400, PageRequest.of(1, 2));
         final int expectedSize = 1;
         assertEquals(expectedSize, all.size());
+    }
+
+    @Test
+    public void checkFindDistinctAllByCategoryAndOptionsAndShopProductPriceBetween() {
+        Option option = optionRepository.findByNameAndValue(Parameter.YEAR, "2017");
+
+        List<Product> products = productRepository.findDistinctAllByCategoryAndOptionsAndShopProductPriceBetween(Category.CPU, option, 230, 320, PageRequest.of(0, 10));
+        int size = products.size();
+        final int expectedSize = 1;
+        assertEquals(expectedSize, size);
     }
 }

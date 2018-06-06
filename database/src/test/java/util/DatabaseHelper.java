@@ -40,13 +40,13 @@ public class DatabaseHelper {
         entityManager.createQuery("delete from Option").executeUpdate();
         entityManager.createQuery("delete from Orders").executeUpdate();
         entityManager.createQuery("delete from Admin").executeUpdate();
+        entityManager.createQuery("delete from ShopProduct").executeUpdate();
         entityManager.createQuery("delete from Shop").executeUpdate();
         entityManager.createQuery("delete from ReviewProduct").executeUpdate();
         entityManager.createQuery("delete from ReviewShop").executeUpdate();
         entityManager.createQuery("delete from Customer").executeUpdate();
         entityManager.createQuery("delete from Product").executeUpdate();
         entityManager.createQuery("delete from ProductOrder").executeUpdate();
-        entityManager.createQuery("delete from ShopProduct").executeUpdate();
         entityManager.createQuery("delete from UserInfo").executeUpdate();
         entityManager.getTransaction().commit();
         entityManager.close();
