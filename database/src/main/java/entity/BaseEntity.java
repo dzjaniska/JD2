@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class BaseEntity<PK extends Serializable> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private PK id;
 
     public PK getId() {

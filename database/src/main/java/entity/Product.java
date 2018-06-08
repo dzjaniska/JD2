@@ -13,6 +13,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
 
@@ -44,9 +45,13 @@ public class Product extends BaseEntity<Long> {
     @ManyToMany(mappedBy = "product")
     private Set<ReviewProduct> reviews;
 
-    public Product(Category category, String description, String image) {
+    @OneToMany(mappedBy = "product")
+    private Set<ShopProduct> shopProduct;
+
+    public Product(Category category, String description, Set<Option> options, String image) {
         this.category = category;
         this.description = description;
+        this.options = options;
         this.image = image;
     }
 }
