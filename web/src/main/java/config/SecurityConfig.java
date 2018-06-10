@@ -1,4 +1,4 @@
-package config;
+package com.matveyenka.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -30,9 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin()
                         .loginPage("/login")
-                    .defaultSuccessUrl("/home")
+                        .defaultSuccessUrl("/home")
                 .and()
-                    .logout();
+                    .logout(); //post!
         http.userDetailsService(userDetailsService);
     }
 

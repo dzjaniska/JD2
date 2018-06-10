@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+</head>
+<body>
+Home page
+<div th:insert="~{header::header}">
+    For replacing
+</div>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" th:value="Logout"/>
+</form>
+</body>
+</html>

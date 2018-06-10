@@ -1,4 +1,4 @@
-package config;
+package com.matveyenka.config;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +19,8 @@ public class InternationalizationConfig implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
-        resourceBundleMessageSource.setBasename("translations");
         resourceBundleMessageSource.setDefaultEncoding(UTF_8.name());
+        resourceBundleMessageSource.setBasename("translations");
         return resourceBundleMessageSource;
     }
 
