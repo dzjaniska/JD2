@@ -37,6 +37,4 @@ public class Option extends BaseEntity<Long> {
         this.name = name;
         this.value = value;
     }
-
-
 }

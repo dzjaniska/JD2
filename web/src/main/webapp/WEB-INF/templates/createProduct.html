@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product's creation</title>
+    <div th:replace="fragments/head::imports"></div>
+</head>
+<body>
+<form th:action="@{/createProduct.html}" method="post" th:object="${product}">
+    <div class="form-group">
+        <label for="name">Name:
+            <input class="form-control" type="text" id="name" th:field="*{description}">
+        </label>
+    </div>
+
+    <div class="form-group">
+        <select name="category" id="category" th:field="*{category}">
+            <option th:each="cat : ${category}"
+                    th:value="${cat}"
+                    th:text="${cat.name()}">Category
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <select name="option" id="option" th:field="*{options}">
+            <option th:each="option : ${availableOptions}"
+                    th:value="${option}"
+                    th:text="${option.getName().name()}">Parameter
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="url">Image URL:
+            <input class="form-control" type="text" id="url" th:field="*{image}">
+        </label>
+    </div>
+
+    <input class="btn btn-success" type="submit" value="Save product">
+</form>
+
+<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

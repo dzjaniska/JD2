@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product's catalog</title>
+    <div th:replace="fragments/head::imports"></div>
+</head>
+<body>
+<header class="header">
+    <div class="container" th:each="cat : ${category}">
+        <span th:text="${cat}">Category</span>
+    </div>
+</header>
+<div class="container" th:each="product:${products}">
+    <div class="row">
+        <div class="col-sm-3"
+             th:style="'background:url(' + ${product.getImage()} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+        </div>
+        <div class="col-sm">
+            <p th:text="${product.getDescription()}">Product name</p>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>
