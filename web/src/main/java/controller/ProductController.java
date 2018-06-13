@@ -15,12 +15,10 @@ import service.ProductService;
 public class ProductController {
 
     private ProductService productService;
-    private OptionService optionService;
 
     @Autowired
-    public ProductController(ProductService productService, OptionService optionService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
-        this.optionService = optionService;
     }
 
     @ModelAttribute("option")

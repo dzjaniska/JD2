@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product's catalog</title>
+    <div th:replace="fragments/head::imports"></div>
+</head>
+<body>
+
+<form action="" th:object="${customer}">
+    <input type="text" th:field="*{login}">
+</form>
+<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

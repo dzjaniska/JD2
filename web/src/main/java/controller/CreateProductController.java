@@ -4,10 +4,10 @@ import entity.Category;
 import entity.Option;
 import entity.Parameter;
 import entity.Product;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,8 +77,11 @@ public class CreateProductController {
     @PostMapping("/createProduct")
     public String createProduct(Product product) {
         product.getOptions().forEach(optionService::save);
-            productService.save(product);
+        productService.save(product);
 
         return "createProduct";
     }
+
+//    TODO
+//    @ExceptionHandler()
 }
