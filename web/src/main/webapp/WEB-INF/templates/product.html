@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product's catalog</title>
+    <div th:replace="fragments/head::imports"></div>
+</head>
+<body>
+
+<div th:text="${product.description}">Product Name</div>
+<div th:each="option : ${product.options}">
+    <span th:text="${option.name}">Option name</span> : <span th:text="${option.value}">Option value</span>
+</div>
+<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

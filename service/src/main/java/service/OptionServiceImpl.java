@@ -2,6 +2,7 @@ package service;
 
 import entity.Category;
 import entity.Option;
+import entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,11 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public Option save(Option option) {
         return optionRepository.save(option);
+    }
+
+    @Override
+    public List<Option> findAllByProduct(Product product) {
+        return optionRepository.findAllByProducts(product);
     }
 
     @Override

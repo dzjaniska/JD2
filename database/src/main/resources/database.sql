@@ -1,7 +1,7 @@
 -- DROP SCHEMA shop CASCADE;
-
+--
 -- CREATE SCHEMA shop;
-
+--
 -- SET SEARCH_PATH TO shop;
 
 CREATE TABLE user_info (
@@ -80,7 +80,7 @@ INSERT INTO customer (user_id, address) VALUES
 CREATE TABLE product (
   id          BIGSERIAL PRIMARY KEY,
   category    CHARACTER VARYING(64)  NOT NULL,
-  description CHARACTER VARYING(256) NOT NULL,
+  description CHARACTER VARYING(256) NOT NULL unique ,
   image       TEXT                   NOT NULL
 );
 

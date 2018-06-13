@@ -7,9 +7,9 @@
 </head>
 <body>
 <header class="header">
-    <div class="container" th:each="cat : ${category}">
-        <span th:text="${cat}">Category</span>
-    </div>
+    <span class="container" th:each="category : ${categories}">
+        <a th:href="@{/catalog?category=__${category}__}" href="/catalog?category=${category}" th:text="${category}">Category</a>
+    </span>
 </header>
 <div class="container" th:each="product:${products}">
     <div class="row">
@@ -18,6 +18,9 @@
         </div>
         <div class="col-sm">
             <p th:text="${product.getDescription()}">Product name</p>
+            <p th:each="option: ${product.options}">
+                <span th:text="${option.name}">Option name</span> : <span th:text="${option.value}">Option value</span>
+            </p>
         </div>
     </div>
 </div>

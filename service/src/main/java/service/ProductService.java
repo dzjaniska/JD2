@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface ProductService {
 
+    Product findById(Long id);
+
     Product save(Product product);
 
     List<Product> findAll();
