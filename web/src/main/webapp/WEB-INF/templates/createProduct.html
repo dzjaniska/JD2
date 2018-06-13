@@ -15,21 +15,28 @@
 
     <div class="form-group">
         <select name="category" id="category" th:field="*{category}">
-            <option th:each="cat : ${category}"
-                    th:value="${cat}"
-                    th:text="${cat.name()}">Category
+            <option th:each="category : ${categories}"
+                    th:value="${category}"
+                    th:text="${category.name()}">Category
             </option>
         </select>
     </div>
 
-    <div class="form-group">
-        <select name="option" id="option" th:field="*{options}">
-            <option th:each="option : ${availableOptions}"
-                    th:value="${option}"
-                    th:text="${option.getName().name()}">Parameter
-            </option>
-        </select>
+    <button type="submit" name="addRow">Add option</button>
+
+    <div th:each="option,rowStat : *{options}">
+        <div class="form-group">
+            <select name="option" id="parameter" th:field="*{options[__${rowStat.index}__].name}">
+                <option th:each="parameter : ${parameters}"
+                        th:value="${parameter}"
+                        th:text="${parameter.toString()}">Parameter
+                </option>
+            </select>
+            <input class="form-control" type="text" th:field="*{options[__${rowStat.index}__].value}">
+        </div>
+        <button type="submit" name="removeRow" th:value="${rowStat.index}">Remove option</button>
     </div>
+
 
     <div class="form-group">
         <label for="url">Image URL:

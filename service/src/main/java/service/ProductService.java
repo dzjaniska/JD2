@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface ProductService {
 
+    Product save(Product product);
+
     List<Product> findAll();
 
     List<Product> findDistinctAllByCategory(Category category);

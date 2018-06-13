@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -40,7 +41,7 @@ public class Product extends BaseEntity<Long> {
     @JoinTable(name = "option_product", schema = "shop",
             joinColumns = {@JoinColumn(name = "product_id")},
             inverseJoinColumns = {@JoinColumn(name = "option_id")})
-    private Set<Option> options;
+    private List<Option> options;
 
     @ManyToMany(mappedBy = "product")
     private Set<ReviewProduct> reviews;
@@ -48,7 +49,7 @@ public class Product extends BaseEntity<Long> {
     @OneToMany(mappedBy = "product")
     private Set<ShopProduct> shopProduct;
 
-    public Product(Category category, String description, Set<Option> options, String image) {
+    public Product(Category category, String description, List<Option> options, String image) {
         this.category = category;
         this.description = description;
         this.options = options;

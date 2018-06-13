@@ -114,16 +114,16 @@ public class DatabaseHelper {
         entityManager.persist(option14);
         entityManager.persist(option15);
 
-        Product product1 = new Product(Category.CPU, "cpuModelName1", new HashSet<Option>(Arrays.asList(option1, option14, option5)), "imageUrl");
-        Product product2 = new Product(Category.CPU, "cpuModelName2", new HashSet<Option>(Arrays.asList(option2, option15, option6)), "imageUrl");
-        Product product3 = new Product(Category.CPU, "cpuModelName3", new HashSet<Option>(Arrays.asList(option2, option13, option5)), "imageUrl");
-        Product product4 = new Product(Category.RAM, "ramModelName1", new HashSet<Option>(Arrays.asList(option1, option3, option5, option7, option9)), "imageUrl");
-        Product product5 = new Product(Category.RAM, "ramModelName2", new HashSet<Option>(Arrays.asList(option1, option4, option5, option8, option9)), "imageUrl");
-        Product product6 = new Product(Category.RAM, "ramModelName3", new HashSet<Option>(Arrays.asList(option1, option3, option6, option7, option10)), "imageUrl");
-        Product product7 = new Product(Category.HDD, "hddModelName1", new HashSet<Option>(Arrays.asList(option1, option3, option7, option11)), "imageUrl");
-        Product product8 = new Product(Category.HDD, "hddModelName2", new HashSet<Option>(Arrays.asList(option2, option4, option7, option12)), "imageUrl");
-        Product product9 = new Product(Category.HDD, "hddModelName3", new HashSet<Option>(Arrays.asList(option2, option4, option6, option13)), "imageUrl");
-        Product product10 = new Product(Category.HDD, "testProduct", new HashSet<Option>(Arrays.asList(option2, option4, option6, option13)), "imageUrl");
+        Product product1 = new Product(Category.CPU, "cpuModelName1", Arrays.asList(option1, option14, option5), "imageUrl");
+        Product product2 = new Product(Category.CPU, "cpuModelName2", Arrays.asList(option2, option15, option6), "imageUrl");
+        Product product3 = new Product(Category.CPU, "cpuModelName3", Arrays.asList(option2, option13, option5), "imageUrl");
+        Product product4 = new Product(Category.RAM, "ramModelName1", Arrays.asList(option1, option3, option5, option7, option9), "imageUrl");
+        Product product5 = new Product(Category.RAM, "ramModelName2", Arrays.asList(option1, option4, option5, option8, option9), "imageUrl");
+        Product product6 = new Product(Category.RAM, "ramModelName3", Arrays.asList(option1, option3, option6, option7, option1), "imageUrl");
+        Product product7 = new Product(Category.HDD, "hddModelName1", Arrays.asList(option1, option3, option7, option1), "imageUrl");
+        Product product8 = new Product(Category.HDD, "hddModelName2", Arrays.asList(option2, option4, option7, option1), "imageUrl");
+        Product product9 = new Product(Category.HDD, "hddModelName3", Arrays.asList(option2, option4, option6, option1), "imageUrl");
+        Product product10 = new Product(Category.HDD, "testProduct", Arrays.asList(option2, option4, option6, option13), "imageUrl");
         entityManager.persist(product1);
         entityManager.persist(product2);
         entityManager.persist(product3);

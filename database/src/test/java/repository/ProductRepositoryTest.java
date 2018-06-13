@@ -47,10 +47,10 @@ public class ProductRepositoryTest {
 
     @Test
     public void checkSave() {
-        Product product = new Product(Category.CPU, "cpuModelName", new HashSet<>(Arrays.asList(
+        Product product = new Product(Category.CPU, "cpuModelName", Arrays.asList(
                 new Option(Parameter.YEAR, "2018"),
                 new Option(Parameter.CAPACITY, "16GB"),
-                new Option(Parameter.PRODUCER, "AMD"))),
+                new Option(Parameter.PRODUCER, "AMD")),
                 "imageUrl");
 
         Product save = productRepository.save(product);

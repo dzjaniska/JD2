@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import repository.OptionRepository;
 import repository.ProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,7 +25,19 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
+    public Option save(Option option) {
+        return optionRepository.save(option);
+    }
+
+    @Override
     public List<Option> findAllByCategory(Category category) {
         return optionRepository.findAllByCategory(category);
+    }
+
+    @Override
+    public List<Option> findAll() {
+        List<Option> options = new ArrayList<>();
+        optionRepository.findAll().forEach(options::add);
+        return options;
     }
 }
