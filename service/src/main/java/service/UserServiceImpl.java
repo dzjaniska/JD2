@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
     public User findFirstByLogin(String login) {
         return userRepository.findFirstByLogin(login);
     }
