@@ -1,8 +1,6 @@
--- DROP SCHEMA shop CASCADE;
---
--- CREATE SCHEMA shop;
---
--- SET SEARCH_PATH TO shop;
+DROP SCHEMA shop CASCADE;
+CREATE SCHEMA shop;
+SET SEARCH_PATH TO shop;
 
 CREATE TABLE user_info (
   id          BIGSERIAL PRIMARY KEY,
@@ -34,14 +32,16 @@ INSERT INTO shop."user" (login, password, role, user_info_id) VALUES
 CREATE TABLE shop (
   id          BIGSERIAL PRIMARY KEY,
   name        CHARACTER VARYING(64)   NOT NULL UNIQUE,
-  description CHARACTER VARYING(1024) NOT NULL
+  description CHARACTER VARYING(1024) NOT NULL,
+  logo  TEXT not null,
+  regNumber BIGINT not null unique
 );
 
-INSERT INTO shop (name, description) VALUES
+INSERT INTO shop (name, description,logo,regNumber) VALUES
   ('TTN', 'TTN.by - №1 по отзывам и ассортименту на Onliner!
 Мы рады предложить Вам более 110 000 товаров из самых разных категорий:
 компьютеры, комплектующие, ноутбуки, мониторы и принтеры, смартфоны и радиотелефоны, весь спектр бытовой техники, телевизоры и аудиотехника, ручной и электроинструмент, садовая техника и товары для отдыха, спортивные товары и тренажеры, сантехника, товары для детей, электроника для автомобиля и многое другое!
-'),
+','https://content.onliner.by/b2b/2118/logotype/90b48e4557859197f2987bbd40c481a4.png',12345678),
   ('SOCKET.BY', 'Интернет-гипермаркет SOCKET.BY – это:
 
 •Оперативная и грамотная консультация
@@ -51,13 +51,13 @@ INSERT INTO shop (name, description) VALUES
 •Низкие цены и система скидок для постоянных клиентов
 •Кредит до 36 месяцев и рассрочка на полгода
 •Оплата наличными курьеру, пластиковой картой а также картами рассрочки "ХАЛВА" "КАРТА ПОКУПОК" "СМАРТ КАРТА" и "ЧЕРЕПАХА"
-•Удобная оплата из любого уголка страны картами рассрочки и обычными картами VISA MASTERCARD и БЕЛКАРТ с помощь онлайн оплаты на нашем сайте SOCKET.BY'),
+•Удобная оплата из любого уголка страны картами рассрочки и обычными картами VISA MASTERCARD и БЕЛКАРТ с помощь онлайн оплаты на нашем сайте SOCKET.BY','https://content.onliner.by/b2b/1378/logotype/42e16d0dee3be5f260035aa6eedcf777.png',12345677),
   ('imarket.by', 'imarket.by – один из крупнейших интернет-магазинов электроники и бытовой техники Беларуси.
 
 График работы интернет-магазина:
 Прием заказов по телефону с 9.00 до 21.00 (без выходных)
 Оформить заказ на нашем сайте можно круглосуточно (24/7)
-Большинство заказов "сегодня на сегодня" принимаются до 14:00 ');
+Большинство заказов "сегодня на сегодня" принимаются до 14:00 ','https://content.onliner.by/b2b/581/logotype/8fb54e2efc8fdba82838395ae1ad1f74.jpeg',12345676);
 
 CREATE TABLE admin (
   user_id BIGINT NOT NULL UNIQUE REFERENCES "user" (id),
@@ -100,16 +100,17 @@ CREATE TABLE shop_product (
   product_id BIGINT  NOT NULL   REFERENCES product (id),
   shop_id    BIGINT  NOT NULL REFERENCES shop (id),
   quantity   INTEGER NOT NULL,
-  price      INTEGER NOT NULL
+  price      INTEGER NOT NULL,
+  version BIGINT NOT NULL
 );
 
-INSERT INTO shop_product (product_id, shop_id, quantity, price) VALUES
-  (1, 1, 5, 176),
-  (1, 2, 5, 171),
-  (1, 3, 5, 221),
-  (2, 1, 5, 183),
-  (2, 2, 5, 184),
-  (2, 3, 5, 226);
+INSERT INTO shop_product (product_id, shop_id, quantity, price,version) VALUES
+  (1, 1, 5, 176,0),
+  (1, 2, 5, 171,0),
+  (1, 3, 5, 221,0),
+  (2, 1, 5, 183,0),
+  (2, 2, 5, 184,0),
+  (2, 3, 5, 226,0);
 
 CREATE TABLE option (
   id    BIGSERIAL PRIMARY KEY,

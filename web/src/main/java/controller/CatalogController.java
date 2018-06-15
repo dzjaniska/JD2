@@ -1,7 +1,6 @@
 package controller;
 
 import entity.Category;
-import entity.Option;
 import entity.Parameter;
 import entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,16 +35,6 @@ public class CatalogController {
         product.setOptions(new ArrayList<>());
 
         return product;
-    }
-
-    @ModelAttribute("option")
-    public Option option() {
-        return new Option();
-    }
-
-    @ModelAttribute("allProducts")
-    public List<Product> allProducts() {
-        return productService.findAll();
     }
 
     @ModelAttribute("categories")

@@ -56,9 +56,9 @@ public class DatabaseHelper {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
 
-        Shop vek = new Shop("21vek", "description 21vek");
-        Shop tnt = new Shop("TNT", "description TNT");
-        Shop element = new Shop("5element", "description 5element");
+        Shop vek = new Shop("21vek", "description 21vek", "logo", 123L);
+        Shop tnt = new Shop("TNT", "description TNT", "logo", 1234L);
+        Shop element = new Shop("5element", "description 5element", "logo", 12L);
         entityManager.persist(vek);
         entityManager.persist(tnt);
         entityManager.persist(element);
@@ -135,28 +135,28 @@ public class DatabaseHelper {
         entityManager.persist(product9);
         entityManager.persist(product10);
 
-        entityManager.persist(new ShopProduct(vek, product1, 5, 500));
-        entityManager.persist(new ShopProduct(vek, product2, 4, 250));
-        entityManager.persist(new ShopProduct(vek, product4, 3, 150));
-        entityManager.persist(new ShopProduct(vek, product6, 2, 270));
-        entityManager.persist(new ShopProduct(vek, product7, 1, 330));
-        entityManager.persist(new ShopProduct(vek, product9, 3, 450));
+        entityManager.persist(new ShopProduct(vek, product1, 5, 500, 0L));
+        entityManager.persist(new ShopProduct(vek, product2, 4, 250, 0L));
+        entityManager.persist(new ShopProduct(vek, product4, 3, 150, 0L));
+        entityManager.persist(new ShopProduct(vek, product6, 2, 270, 0L));
+        entityManager.persist(new ShopProduct(vek, product7, 1, 330, 0L));
+        entityManager.persist(new ShopProduct(vek, product9, 3, 450, 0L));
 
 
-        entityManager.persist(new ShopProduct(tnt, product1, 3, 450));
-        entityManager.persist(new ShopProduct(tnt, product3, 7, 430));
-        entityManager.persist(new ShopProduct(tnt, product4, 8, 170));
-        entityManager.persist(new ShopProduct(tnt, product5, 4, 120));
-        entityManager.persist(new ShopProduct(tnt, product7, 1, 300));
-        entityManager.persist(new ShopProduct(tnt, product8, 3, 410));
+        entityManager.persist(new ShopProduct(tnt, product1, 3, 450, 0L));
+        entityManager.persist(new ShopProduct(tnt, product3, 7, 430, 0L));
+        entityManager.persist(new ShopProduct(tnt, product4, 8, 170, 0L));
+        entityManager.persist(new ShopProduct(tnt, product5, 4, 120, 0L));
+        entityManager.persist(new ShopProduct(tnt, product7, 1, 300, 0L));
+        entityManager.persist(new ShopProduct(tnt, product8, 3, 410, 0L));
 
 
-        entityManager.persist(new ShopProduct(element, product2, 4, 220));
-        entityManager.persist(new ShopProduct(element, product3, 3, 400));
-        entityManager.persist(new ShopProduct(element, product5, 7, 110));
-        entityManager.persist(new ShopProduct(element, product6, 9, 250));
-        entityManager.persist(new ShopProduct(element, product8, 6, 400));
-        entityManager.persist(new ShopProduct(element, product9, 1, 430));
+        entityManager.persist(new ShopProduct(element, product2, 4, 220, 0L));
+        entityManager.persist(new ShopProduct(element, product3, 3, 400, 0L));
+        entityManager.persist(new ShopProduct(element, product5, 7, 110, 0L));
+        entityManager.persist(new ShopProduct(element, product6, 9, 250, 0L));
+        entityManager.persist(new ShopProduct(element, product8, 6, 400, 0L));
+        entityManager.persist(new ShopProduct(element, product9, 1, 430, 0L));
 
         entityManager.persist(new ReviewShop("shopReviewText", 5, LocalDate.now(), customer1, new HashSet<Shop>(Arrays.asList(vek))));
         entityManager.persist(new ReviewShop("shopReviewText", 4, LocalDate.now(), customer2, new HashSet<Shop>(Arrays.asList(vek))));

@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Getter
@@ -34,4 +35,9 @@ public class ShopProduct extends BaseEntity<Long> {
 
     @Column(name = "price", nullable = false)
     private Integer price;
+
+    @Version
+    @Column(name = "version")
+    private Long version;
+
 }

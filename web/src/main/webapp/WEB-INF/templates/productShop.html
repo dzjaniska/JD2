@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product's catalog</title>
+    <div th:replace="fragments/head::imports"></div>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3"
+             th:style="'background:url(' + ${product.getProductImage()} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+        </div>
+        <div class="col-sm-9">
+            <p th:text="${product.productName}">Product name</p>
+            <p th:each="option: ${product.options}">
+                <span th:text="${option.name}">Option name</span> : <span th:text="${option.value}">Option value</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12" th:each="shop : ${product.shops}">
+            <div class="col-sm-3"
+                 th:style="'background:url(' + ${shop.shopLogo} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+                Shop Logo
+            </div>
+            <div class="col-sm-9">
+                <p th:text="${shop.shopName}">Shop Name</p>
+                <p th:text="${shop.price}">Price</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

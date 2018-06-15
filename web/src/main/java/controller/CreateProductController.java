@@ -5,6 +5,7 @@ import entity.Option;
 import entity.Parameter;
 import entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 @Controller
+@Scope()
 @SessionAttributes("product")
 public class CreateProductController {
 

@@ -3,12 +3,13 @@ package controller;
 import entity.Admin;
 import entity.Customer;
 import entity.Role;
-import entity.UserInfo;
+import entity.Shop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import service.ShopService;
 import service.UserInfoService;
 import service.UserService;
 
@@ -17,6 +18,7 @@ public class RegistrationController {
 
     private UserService userService;
     private UserInfoService userInfoService;
+    private ShopService shopService;
 
     @ModelAttribute("admin")
     public Admin admin() {
@@ -28,15 +30,11 @@ public class RegistrationController {
         return new Customer();
     }
 
-    @ModelAttribute("info")
-    public UserInfo userInfo() {
-        return new UserInfo();
-    }
-
     @Autowired
-    public RegistrationController(UserService userService, UserInfoService userInfoService) {
+    public RegistrationController(UserService userService, UserInfoService userInfoService, ShopService shopService) {
         this.userService = userService;
         this.userInfoService = userInfoService;
+        this.shopService = shopService;
     }
 
     @GetMapping("/registration")
@@ -53,6 +51,7 @@ public class RegistrationController {
             userService.save(customer);
         } else {
             userInfoService.save(admin.getUserInfo());
+            shopService.save(admin.getShop());
             admin.setRole(Role.ADMIN);
             userService.save(admin);
         }

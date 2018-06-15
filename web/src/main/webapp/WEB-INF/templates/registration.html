@@ -75,6 +75,26 @@
                     </label>
                 </div>
                 <div class="form-group">
+                    <label for="shopName">Shop Name
+                        <input class="form-control" id="shopName" type="text" th:field="*{shop.name}">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="shopDescription">Shop Description
+                        <textarea class="form-control" id="shopDescription" th:field="*{shop.description}"></textarea>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="shopLogo">Shop Logo
+                        <input class="form-control" id="shopLogo" type="text" th:field="*{shop.logo}">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="regNumber">Registration Number
+                        <input class="form-control" id="regNumber" type="text" th:field="*{shop.regNumber}">
+                    </label>
+                </div>
+                <div class="form-group">
                     <input type="submit" class="btn btn-success" value="SAVE">
                 </div>
             </form>
