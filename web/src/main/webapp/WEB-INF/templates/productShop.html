@@ -6,11 +6,12 @@
     <div th:replace="fragments/head::imports"></div>
 </head>
 <body>
+<div th:replace="fragments/header::header"></div>
 
 <div class="container">
     <div class="row">
         <div class="col-sm-3"
-             th:style="'background:url(' + ${product.getProductImage()} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+             th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
         </div>
         <div class="col-sm-9">
             <p th:text="${product.productName}">Product name</p>
@@ -22,16 +23,14 @@
 </div>
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12" th:each="shop : ${product.shops}">
-            <div class="col-sm-3"
-                 th:style="'background:url(' + ${shop.shopLogo} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
-                Shop Logo
-            </div>
-            <div class="col-sm-9">
-                <p th:text="${shop.shopName}">Shop Name</p>
-                <p th:text="${shop.price}">Price</p>
-            </div>
+    <div class="row" th:each="shop : ${product.shops}">
+        <div class="col-sm-3"
+             th:style="'background:url(' + ${shop.shopLogo} + '); background-size: contain; background-repeat: no-repeat; background-position: center;'">
+        </div>
+        <div class="col-sm-9">
+            <p th:text="${shop.shopName}">Shop Name</p>
+            <p th:text="${shop.price}">Price</p>
+            <a th:href="@{/addToCart(productId=__${product.id}__,shopId=__${shop.id}__)}">Add To Cart</a>
         </div>
     </div>
 </div>

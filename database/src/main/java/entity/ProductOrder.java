@@ -1,6 +1,7 @@
 package entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import javax.persistence.Table;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "product_order", schema = "shop")
 public class ProductOrder extends BaseEntity<Long> {
 

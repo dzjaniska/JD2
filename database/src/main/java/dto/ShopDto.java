@@ -13,6 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class ShopDto {
 
+    private Long id;
     private String shopLogo;
     private String shopName;
     private Integer price;

@@ -1,6 +1,7 @@
 package dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +14,9 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CardDto {
+@Builder
+public class CatalogPageDto {
 
-    private List<CardItemDto> productList;
+    private List<CatalogDto> products;
+    private Integer pages;
 }

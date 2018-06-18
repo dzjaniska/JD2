@@ -5,10 +5,8 @@ import entity.Option;
 import entity.Parameter;
 import entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 @Controller
-@Scope()
 @SessionAttributes("product")
 public class CreateProductController {
 
@@ -56,32 +53,32 @@ public class CreateProductController {
         return Parameter.values();
     }
 
-    @RequestMapping("/createProduct")
+    @RequestMapping("/admin/createProduct")
     public String createPage(Product product) {
-        return "createProduct";
+        return "admin/createProduct";
     }
 
-    @RequestMapping(value = "/createProduct", params = {"addRow"})
+    @RequestMapping(value = "/admin/createProduct", params = {"addRow"})
     public String createProductPage(Model model, Product product) {
         product.getOptions().add(new Option());
         model.addAttribute("product", product);
-        return "createProduct";
+        return "admin/createProduct";
     }
 
-    @RequestMapping(value = "/createProduct", params = {"removeRow"})
+    @RequestMapping(value = "/admin/createProduct", params = {"removeRow"})
     public String addOption(Model model, Product product, final HttpServletRequest req) {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
         product.getOptions().remove(rowId.intValue());
         model.addAttribute("product", product);
-        return "createProduct";
+        return "admin/createProduct";
     }
 
-    @PostMapping("/createProduct")
+    @PostMapping("/admin/createProduct")
     public String createProduct(Product product) {
         product.getOptions().forEach(optionService::save);
         productService.save(product);
 
-        return "createProduct";
+        return "admin/createProduct";
     }
 
 //    TODO

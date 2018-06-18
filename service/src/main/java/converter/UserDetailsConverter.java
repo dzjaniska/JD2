@@ -5,6 +5,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+
 @Component
 public class UserDetailsConverter {
 
@@ -13,7 +15,7 @@ public class UserDetailsConverter {
                 .builder()
                 .username(user.getLogin())
                 .password(user.getPassword())
-                .authorities(new SimpleGrantedAuthority(user.getRole().name()))
+                .authorities(Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString())))
                 .build();
         return build;
     }

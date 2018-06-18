@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +33,7 @@ public class Orders extends BaseEntity<Long> {
     @Column(name = "order_time")
     private LocalDateTime orderTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "delivery_time")
     private LocalDateTime deliveryTime;
 

@@ -1,19 +1,20 @@
 package dto;
 
+import entity.Orders;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CardItemDto {
+public class ProductOrderDto {
 
     private Long productId;
+
+    private Orders orders;
+
     private Long shopId;
+
     private Integer quantity;
 }

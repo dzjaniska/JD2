@@ -6,7 +6,7 @@
     <div th:replace="fragments/head::imports"></div>
 </head>
 <body>
-<form th:action="@{/createProduct.html}" method="post" th:object="${product}">
+<form th:action="@{/admin/createProduct}" method="post" th:object="${product}">
     <div class="form-group">
         <label for="name">Name:
             <input class="form-control" type="text" id="name" th:field="*{description}">

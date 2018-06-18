@@ -6,21 +6,40 @@
     <div th:replace="fragments/head::imports"></div>
 </head>
 <body>
-<header class="header">
-    <span class="container" th:each="category : ${categories}">
-        <a th:href="@{/catalog?category=__${category}__}" href="/catalog?category=${category}" th:text="${category}">Category</a>
-    </span>
-</header>
-<div class="container" th:each="product:${products}">
+<div th:replace="fragments/header::header"></div>
+
+<div class="container" th:each="product:${productList.products}">
     <div class="row">
         <div class="col-sm-3"
-             th:style="'background:url(' + ${product.getImage()} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+             th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
         </div>
-        <div class="col-sm">
-            <p th:text="${product.getDescription()}">Product name</p>
+        <div class="col-sm-7">
+            <p th:text="${product.productName}">Product name</p>
             <p th:each="option: ${product.options}">
                 <span th:text="${option.name}">Option name</span> : <span th:text="${option.value}">Option value</span>
             </p>
+        </div>
+        <div class="col-sm-2">
+            <p>
+                <span th:text="${product.minPrice}">Min price</span> - <span
+                    th:text="${product.maxPrice}">Max price</span>
+            </p>
+            <p>
+                <a th:href="@{/productShop?id=__${product.id}__}">
+                    <span th:text="${product.offers}"></span> offers </a>
+            </p>
+            <p th:text="${product.rating}">Rating</p>
+            <a th:href="@{/product?id=__${product.id}__}">Details</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1"
+             th:with="currentUrl=(${#httpServletRequest.requestURI + '?' + #strings.defaultString(#httpServletRequest.queryString, '')})"
+             th:each="pageN : ${#numbers.sequence(0,productList.pages-1)}">
+            <a th:href="@{${currentUrl}(page=__${pageN}__)}" th:text="${pageN+1}"></a>
         </div>
     </div>
 </div>

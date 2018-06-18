@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product's catalog</title>
+    <div th:replace="fragments/head::imports"></div>
+</head>
+<body>
+<div th:replace="fragments/header::header"></div>
+
+<!--<div class="col-sm" th:text="${customer.userInfo.name}"></div>-->
+
+<div class="container">
+    <form th:action="@{/customer/order}" method="post" th:object="${orderDto}">
+        <div class="row" th:each="product,rowStat : ${products}">
+            <div class="col-sm-3"
+                 th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+            </div>
+            <div class="col-sm-7">
+                <input type="hidden" th:attr="name='productOrders[' + ${rowStat.index} + '].productId'"
+                       th:value="${product.productId}">
+                <input type="hidden" th:attr="name='productOrders[' + ${rowStat.index} + '].shopId'"
+                       th:value="${product.shopId}">
+                <p th:text="${product.productName}">Product name</p>
+                <p th:each="option: ${product.options}">
+                    <span th:text="${option.name}">Option name</span> : <span
+                        th:text="${option.value}">Option value</span>
+                </p>
+            </div>
+            <select name="quantity" id="quantity" th:field="*{productOrders[__${rowStat.index}__].quantity}">
+                <option th:value="${quantity}" th:each="quantity : ${#numbers.sequence(1,product.availableQuantity)}"
+                        th:text="${quantity}">Quantity
+                </option>
+            </select>
+            <div class="col-sm-1">
+                <p>
+                    <span th:text="${product.price}">Price</span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <input type="datetime-local" th:field="*{order.deliveryTime}">
+            <input type="submit" value="Make Order">
+        </div>
+    </form>
+</div>
+
+<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

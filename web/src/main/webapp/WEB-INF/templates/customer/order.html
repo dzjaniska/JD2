@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+</head>
+<body>
+Your order has been processed!
+<form th:action="@{/logout}" method="post">
+    <input type="submit" th:value="Logout"/>
+</form>
+</body>
+</html>

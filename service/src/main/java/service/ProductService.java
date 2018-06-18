@@ -1,8 +1,10 @@
 package service;
 
+import dto.CatalogPageDto;
 import dto.ProductDto;
 import entity.Category;
 import entity.Product;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +21,7 @@ public interface ProductService {
 
     List<Product> findAll();
 
-    List<Product> findDistinctAllByCategory(Category category);
-
-    List<Product> findAllCategoryOrderByMinPrice(Category category);
+    CatalogPageDto findDistinctAllByCategory(Category category, Pageable pageable);
 
     Optional<Product> findByName(String name);
 }

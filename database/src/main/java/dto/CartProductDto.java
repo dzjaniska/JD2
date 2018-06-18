@@ -2,6 +2,7 @@ package dto;
 
 import entity.Option;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,12 +15,16 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDto {
+@Builder
+public class CartProductDto {
 
-    private Long id;
+    private Long productId;
     private String productName;
     private String productImage;
     private List<Option> options;
 
-    private List<ShopDto> shops;
+    private Integer price;
+
+    private Long shopId;
+    private Integer availableQuantity;
 }

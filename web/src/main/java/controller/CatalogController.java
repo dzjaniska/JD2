@@ -1,9 +1,11 @@
 package controller;
 
+import dto.CatalogPageDto;
 import entity.Category;
 import entity.Parameter;
-import entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import service.OptionService;
 import service.ProductService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @SessionAttributes("product")
@@ -29,14 +28,6 @@ public class CatalogController {
         this.optionService = optionService;
     }
 
-    @ModelAttribute("product")
-    public Product product() {
-        Product product = new Product();
-        product.setOptions(new ArrayList<>());
-
-        return product;
-    }
-
     @ModelAttribute("categories")
     public Category[] categories() {
         return Category.values();
@@ -48,16 +39,18 @@ public class CatalogController {
     }
 
     @GetMapping("/catalog")
-    public String showLoginPage(Model model,
-                                @RequestParam(value = "sort", required = false) String sort,
-                                @RequestParam(value = "category", required = false) String category) {
-        List<Product> products = null;
+    public String showCatalog(Model model,
+                              @RequestParam(value = "sort", required = false, defaultValue = "description") String sort,
+                              @RequestParam(value = "category", required = false) String category,
+                              @RequestParam(value = "option", required = false) String option,
+                              @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+                              @RequestParam(value = "quantity", required = false, defaultValue = "5") Integer size) {
+        CatalogPageDto products = null;
+
         if (category != null) {
-            products = productService.findDistinctAllByCategory(Category.valueOf(category));
-        } else {
-            products = productService.findAll();
+            products = productService.findDistinctAllByCategory(Category.valueOf(category), PageRequest.of(page, size, new Sort(Sort.Direction.ASC, sort)));
         }
-        model.addAttribute("products", products);
+        model.addAttribute("productList", products);
         return "catalog";
     }
 }
