@@ -42,6 +42,7 @@ public class CartController {
     private ProductService productService;
     private ShopService shopService;
 
+    @Autowired
     public CartController(UserService userService, ShopProductService shopProductService, OrderService orderService, ProductOrderService productOrderService, ProductService productService, ShopService shopService) {
         this.userService = userService;
         this.shopProductService = shopProductService;
@@ -50,9 +51,6 @@ public class CartController {
         this.productService = productService;
         this.shopService = shopService;
     }
-
-    @Autowired
-
 
     @ModelAttribute("orderDto")
     public OrderDto orderDto() {

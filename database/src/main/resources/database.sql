@@ -24,10 +24,10 @@ CREATE TABLE "user" (
 );
 
 INSERT INTO shop."user" (login, password, role, user_info_id) VALUES
-  ('admin', 'admin', 'ADMIN', 1),
-  ('admin1', 'admin', 'ADMIN', 2),
-  ('customer', 'customer', 'CUSTOMER', 3),
-  ('customer1', 'customer', 'CUSTOMER', 4);
+  ('admin', '$2a$10$4dCg3L1UIDzSqmYq3b58le1byS51aovzmIZaCPwM9F6ZqvmWn5DOy', 'ADMIN', 1),
+  ('admin1', '$2a$10$4dCg3L1UIDzSqmYq3b58le1byS51aovzmIZaCPwM9F6ZqvmWn5DOy', 'ADMIN', 2),
+  ('customer', '$2a$10$1FpAT12sYVlGJatRrAp1seTIenlzPUFh5OLvWzQsqT0xZX3ZGcm9u', 'CUSTOMER', 3),
+  ('customer1', '$2a$10$1FpAT12sYVlGJatRrAp1seTIenlzPUFh5OLvWzQsqT0xZX3ZGcm9u', 'CUSTOMER', 4);
 
 CREATE TABLE shop (
   id          BIGSERIAL PRIMARY KEY,
