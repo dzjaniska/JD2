@@ -30,10 +30,8 @@ public class AdminController {
 
     private UserService userService;
     private ShopProductService shopProductService;
-    private OrderService orderService;
     private ProductOrderService productOrderService;
     private ProductService productService;
-    private ShopService shopService;
 
     @ModelAttribute("shopProduct")
     public ShopProductDto shopProduct() {
@@ -41,13 +39,11 @@ public class AdminController {
     }
 
     @Autowired
-    public AdminController(UserService userService, ShopProductService shopProductService, OrderService orderService, ProductOrderService productOrderService, ProductService productService, ShopService shopService) {
+    public AdminController(UserService userService, ShopProductService shopProductService, ProductOrderService productOrderService, ProductService productService) {
         this.userService = userService;
         this.shopProductService = shopProductService;
-        this.orderService = orderService;
         this.productOrderService = productOrderService;
         this.productService = productService;
-        this.shopService = shopService;
     }
 
     @GetMapping("/admin/admin")

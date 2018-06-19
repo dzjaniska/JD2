@@ -1,6 +1,7 @@
 package entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString(callSuper = true, exclude = {"user", "product"})
 @NoArgsConstructor
 @AllArgsConstructor

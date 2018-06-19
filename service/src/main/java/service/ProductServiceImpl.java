@@ -52,14 +52,16 @@ public class ProductServiceImpl implements ProductService {
                 .options(product.getOptions())
                 .maxPrice(product.getShopProduct().stream().map(ShopProduct::getPrice).max(Comparator.comparing(Integer::valueOf)).orElse(0))
                 .minPrice(product.getShopProduct().stream().map(ShopProduct::getPrice).min(Comparator.comparing(Integer::valueOf)).orElse(0))
-                .offers(product.getShopProduct().size())
+                .offers(product.getShopProduct().stream().filter(it -> it.getQuantity() > 0).collect(Collectors.toSet()).size())
                 .reviews(product.getReviews().stream().map(it -> new ReviewDto().builder()
                         .userName(it.getUser().getUserInfo().getName())
                         .userSecondName(it.getUser().getUserInfo().getSurname())
                         .rating(it.getRating())
                         .text(it.getText())
                         .date(it.getDate())
-                        .build()).collect(Collectors.toSet()))
+                        .build())
+                        .sorted(Comparator.comparing(ReviewDto::getDate).reversed())
+                        .collect(Collectors.toSet()))
                 .build();
     }
 

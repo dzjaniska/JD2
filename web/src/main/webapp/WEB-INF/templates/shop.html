@@ -9,30 +9,20 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-3"
-             th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+             th:style="'background:url(' + ${shop.shopLogo} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
         </div>
         <div class="col-sm">
-            <b><p th:text="${product.productName}">Product Name</p></b>
-            <p>Rating: <span th:text="${#numbers.formatDecimal(product.rating,1,2)}">Rating</span></p>
-            <p>Price range: <span th:text="${product.minPrice}">min</span> - <span
-                    th:text="${product.maxPrice}">max</span></p>
-            <a class="btn-info" th:href="@{/productShop(id=__${product.id}__)}"><span th:text="${product.offers}">Number of offers</span>
-                offers</a>
+            <b><p style="font: 18px" th:text="${shop.shopName}">Shop Name</p></b>
+            <p>Rating: <span th:text="${#numbers.formatDecimal(shop.rating,1,2)}">Rating</span></p>
         </div>
     </div>
-    Characteristics:
-    <div class="row" th:each="option : ${product.options}">
-        <div class="col-sm-2" th:text="${option.name}"><b>Option name</b></div>
-        :
-        <div class="col-sm" th:text="${option.value}">Option value
-        </div>
-    </div>
+    <div class="row" th:text="${shop.description}">Description</div>
     <br>
     <br>
     Reviews:
     <div class="row">
         <div style="border: 1px bisque solid; background-color: aliceblue;opacity: 0.5;" class="col-sm-12"
-             th:each="review : ${product.reviews}">
+             th:each="review : ${shop.reviews}">
             <p>
                 <span th:text="${review.userName}">Name</span> <span
                     th:text="${review.userSecondName}">Second Name</span> on <span th:text="${review.date}"></span>
@@ -44,7 +34,7 @@
     <br>
     <br>
     <div class="row">
-        <form th:action="@{/product}" method="post" th:object="${reviewProduct}" style="min-width: 100%">
+        <form th:action="@{/product}" method="post" th:object="${reviewShop}" style="min-width: 100%">
             <div class="form-group">
                 <label for="text">Review text:
                     <textarea class="form-control" id="text" th:field="*{text}"></textarea>
@@ -56,7 +46,7 @@
                     </option>
                     </option>
                 </select>
-                <input type="hidden" th:attr="name='productId'" th:value="${product.id}">
+                <input type="hidden" th:attr="name='shopId'" th:value="${shop.id}">
                 <input type="submit" value="Send review">
             </div>
         </form>

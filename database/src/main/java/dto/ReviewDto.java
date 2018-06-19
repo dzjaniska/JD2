@@ -22,4 +22,6 @@ public class ReviewDto {
     private String text;
     private Integer rating;
     private LocalDate date;
+    private Long productId;
+    private Long shopId;
 }

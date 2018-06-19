@@ -1,10 +1,9 @@
 package controller;
 
-import dto.CatalogDto;
 import dto.ReviewDto;
+import dto.ShopPageDto;
 import entity.Customer;
-import entity.Option;
-import entity.ReviewProduct;
+import entity.ReviewShop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import service.ProductService;
-import service.ReviewProductService;
+import service.ReviewShopService;
+import service.ShopService;
 import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,44 +23,39 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 @Controller
-public class ProductController {
+public class ShopController {
 
-    private ProductService productService;
-    private ReviewProductService reviewProductService;
+    private ShopService shopService;
     private UserService userService;
+    private ReviewShopService reviewShopService;
 
     @Autowired
-    public ProductController(ProductService productService, ReviewProductService reviewProductService, UserService userService) {
-        this.productService = productService;
-        this.reviewProductService = reviewProductService;
+    public ShopController(ShopService shopService, UserService userService, ReviewShopService reviewShopService) {
+        this.shopService = shopService;
         this.userService = userService;
+        this.reviewShopService = reviewShopService;
     }
 
-    @ModelAttribute("option")
-    public Option option() {
-        return new Option();
-    }
-
-    @ModelAttribute("reviewProduct")
+    @ModelAttribute("reviewShop")
     public ReviewDto reviewProduct() {
         return new ReviewDto();
     }
 
-    @GetMapping("/product")
-    public String showProductPage(Model model, @RequestParam(value = "id") Long id) {
-        CatalogDto product = productService.findByIdCatalogItem(id);
-        model.addAttribute("product", product);
+    @GetMapping("/shop")
+    public String showShopPage(Model model, @RequestParam(value = "id") Long id) {
+        ShopPageDto shop = shopService.findByIdDto(id);
+        model.addAttribute("shop", shop);
 
-        return "product";
+        return "shop";
     }
 
-    @PostMapping("/product")
+    @PostMapping("/shop")
     public String sendReview(ReviewDto reviewDto, HttpServletRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = (Customer) userService.findFirstByLogin(auth.getName());
-        reviewProductService.save(new ReviewProduct().builder()
+        reviewShopService.save(new ReviewShop().builder()
                 .user(customer)
-                .product(new HashSet<>(Arrays.asList(productService.findById(reviewDto.getProductId()))))
+                .shop(new HashSet<>(Arrays.asList(shopService.findById(reviewDto.getShopId()))))
                 .date(LocalDate.now())
                 .rating(reviewDto.getRating())
                 .text(reviewDto.getText())

@@ -29,7 +29,7 @@
                 <a th:href="@{/productShop?id=__${product.id}__}">
                     <span th:text="${product.offers}"></span> offers </a>
             </p>
-            <p>Rating: <span th:text="${product.rating}">Rating</span></p>
+            <p>Rating: <span th:text="${#numbers.formatDecimal(product.rating,1,2)}">Rating</span></p>
             <a th:href="@{/product?id=__${product.id}__}">Details</a>
         </div>
     </div>
