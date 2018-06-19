@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop Orders</title>
+    <div th:replace="fragments/head::imports"></div>
+</head>
+<body>
+<div th:replace="fragments/header::header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <span th:text="${admin.userInfo.name}"></span> <span th:text="${admin.userInfo.secondName}"></span>
+        </div>
+    </div>
+    <div class="row" style="border: 3px solid black" th:each="order : ${orders}">
+        <div class="col-sm-3">
+            <p>Order #<span th:text="${order.orderId}">OrderId</span></p>
+            <p>Order date: <span th:text="${order.orderTime}">Time</span></p>
+            <p>Delivery date: <span th:text="${order.deliveryTime}">Time</span></p>
+            <p>Delivery date: <span th:text="${order.deliveryTime}">Time</span></p>
+            <p>Customer name: <span th:text="${order.userName}">User Name</span> <span
+                    th:text="${order.userSecondName}">User Second Name</span></p>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                <a class="col-sm-3" th:href="@{/product(id=__${order.productId}__)}">
+                    <div th:style="'background:url(' + ${order.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+                    </div>
+                </a>
+                <div class="col-sm-7">
+                    <p th:text="${order.productName}">Product name</p>
+                    <p>Quantity <span th:text="${order.quantity}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

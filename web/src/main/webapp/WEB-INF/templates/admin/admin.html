@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin page</title>
+    <title>Shop Admin Page</title>
+    <div th:replace="fragments/head::imports"></div>
 </head>
 <body>
-Admin page
+<div th:replace="fragments/header::header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <span th:text="${admin.userInfo.name}"></span> <span th:text="${admin.userInfo.secondName}"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <a href="/admin/shopOrders" class="btn btn-primary">Check orders</a>
+        </div>
+        <div class="col-sm">
+            <a href="/admin/shopProducts" class="btn btn-primary">Check products on stock</a>
+        </div>
+        <div class="col-sm">
+            <a href="/admin/createProduct" class="btn btn-primary">Add new product to base</a>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

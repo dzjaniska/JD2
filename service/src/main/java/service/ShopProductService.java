@@ -1,9 +1,10 @@
 package service;
 
 import dto.CartProductDto;
-import entity.Product;
-import entity.Shop;
+import dto.ShopProductDto;
 import entity.ShopProduct;
+
+import java.util.List;
 
 public interface ShopProductService {
 
@@ -13,5 +14,5 @@ public interface ShopProductService {
 
     ShopProduct save(ShopProduct shopProduct);
 
-//    ShopProduct findFirstByProductAndShop(Product product, Shop shop);
+    List<ShopProductDto> findAllByShopIdAndQuantityGreaterThan(Long id);
 }

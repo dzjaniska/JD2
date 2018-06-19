@@ -28,4 +28,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Modifying
     @Query("UPDATE Product p set p.description= :name where p= :product")
     int updateProduct(@Param("name") String name, @Param("product") Product product);
+
+    List<Product> findAllByDescriptionContainingIgnoreCase(String name);
 }

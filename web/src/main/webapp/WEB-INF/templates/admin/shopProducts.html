@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop Orders</title>
+    <div th:replace="fragments/head::imports"></div>
+</head>
+<body>
+<div th:replace="fragments/header::header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <span th:text="${admin.userInfo.name}"></span> <span th:text="${admin.userInfo.secondName}"></span>
+        </div>
+    </div>
+    <div class="row">
+        <form th:action="@{/admin/search}" method="get">
+            <label for="search">Search product:
+                <input class="form-control" type="text" id="search" name="name">
+            </label>
+            <input type="submit" value="Search" class="btn btn-info">
+        </form>
+    </div>
+    <div class="row" style="border: 3px solid black" th:each="product,rowStat : ${products}">
+        <a class="col-sm-3" th:href="@{/product(id=__${product.productId}__)}">
+            <div th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+            </div>
+        </a>
+        <div class="col-sm-7">
+            <form th:action="@{/admin/shopProducts}" method="post" th:object="${shopProduct}">
+
+                <p th:text="${product.productName}">Product name</p>
+                <label for="quantity">Set quantity: (current quantity on stock: <span th:text="${product.quantity}">quantity</span>)
+                    <input class="form-control" type="text" id="quantity" th:field="*{quantity}">
+                </label><br>
+                <label for="price">Set price: (current price: <span th:text="${product.price}">quantity</span>)
+                    <input class="form-control" type="text" id="price" th:field="*{price}">
+                </label><br>
+                <input type="hidden" th:attr="name='productId'" th:value="${product.productId}">
+                <input type="submit" value="Save changes" class="btn btn-success">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

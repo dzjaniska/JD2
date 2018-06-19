@@ -10,11 +10,12 @@
 
 <div class="container" th:each="product:${productList.products}">
     <div class="row">
-        <div class="col-sm-3"
-             th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
-        </div>
+        <a th:href="@{/product(id=__${product.id}__)}" class="col-sm-3">
+            <div th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+            </div>
+        </a>
         <div class="col-sm-7">
-            <p th:text="${product.productName}">Product name</p>
+            <p>Product Name: <span th:text="${product.productName}">Product name</span></p>
             <p th:each="option: ${product.options}">
                 <span th:text="${option.name}">Option name</span> : <span th:text="${option.value}">Option value</span>
             </p>
@@ -28,7 +29,7 @@
                 <a th:href="@{/productShop?id=__${product.id}__}">
                     <span th:text="${product.offers}"></span> offers </a>
             </p>
-            <p th:text="${product.rating}">Rating</p>
+            <p>Rating: <span th:text="${product.rating}">Rating</span></p>
             <a th:href="@{/product?id=__${product.id}__}">Details</a>
         </div>
     </div>

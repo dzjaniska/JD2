@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString(callSuper = true,exclude = "products")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders", schema = "shop")

@@ -3,7 +3,9 @@ package service;
 import dto.CatalogDto;
 import dto.CatalogPageDto;
 import dto.ProductDto;
+import dto.ReviewDto;
 import dto.ShopDto;
+import dto.ShopProductDto;
 import entity.Category;
 import entity.Product;
 import entity.ReviewProduct;
@@ -38,17 +40,28 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id).get();
     }
 
-    /*@Override
-    public List<CartProductDto> findByIdIn(List<Long> ids) {
-        List<Product> products = productRepository.findAllByIdIn(ids);
-        List<CartProductDto> productDtos = new ArrayList<>();
-        products.stream().map(it -> productDtos.add(new CartProductDto().builder()
-                .productName(it.getDescription())
-                .productImage(it.getImage())
-                .options(it.getOptions())
-                .availableQuantity()
-                .build()))
-    }*/
+    @Override
+    public CatalogDto findByIdCatalogItem(Long id) {
+        Product product = productRepository.findById(id).get();
+
+        return new CatalogDto().builder()
+                .id(product.getId())
+                .productName(product.getDescription())
+                .productImage(product.getImage())
+                .rating(product.getReviews().stream().mapToDouble(ReviewProduct::getRating).average().orElse(Double.NaN))
+                .options(product.getOptions())
+                .maxPrice(product.getShopProduct().stream().map(ShopProduct::getPrice).max(Comparator.comparing(Integer::valueOf)).orElse(0))
+                .minPrice(product.getShopProduct().stream().map(ShopProduct::getPrice).min(Comparator.comparing(Integer::valueOf)).orElse(0))
+                .offers(product.getShopProduct().size())
+                .reviews(product.getReviews().stream().map(it -> new ReviewDto().builder()
+                        .userName(it.getUser().getUserInfo().getName())
+                        .userSecondName(it.getUser().getUserInfo().getSurname())
+                        .rating(it.getRating())
+                        .text(it.getText())
+                        .date(it.getDate())
+                        .build()).collect(Collectors.toSet()))
+                .build();
+    }
 
     @Override
     public Product findByIdWithShops(Long id) {
@@ -111,5 +124,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Product> findByName(String name) {
         return productRepository.findFirstByDescription(name);
+    }
+
+    @Override
+    public List<ShopProductDto> findAllByDescriptionContainingIgnoreCase(String name) {
+        List<ShopProductDto> productDtos = new ArrayList<>();
+
+        List<Product> products = productRepository.findAllByDescriptionContainingIgnoreCase(name);
+        products.forEach(it -> productDtos.add(new ShopProductDto().builder()
+                .productName(it.getDescription())
+                .productImage(it.getImage())
+                .productId(it.getId())
+                .build()));
+
+        return productDtos;
     }
 }

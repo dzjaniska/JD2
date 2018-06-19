@@ -1,7 +1,7 @@
 package controller;
 
+import dto.CatalogDto;
 import entity.Option;
-import entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +27,8 @@ public class ProductController {
 
     @GetMapping("/product")
     public String showProductPage(Model model, @RequestParam(value = "id") Long id) {
-        Product product = productService.findById(id);
+        CatalogDto product = productService.findByIdCatalogItem(id);
+
         model.addAttribute("product", product);
         return "product";
     }

@@ -6,11 +6,43 @@
     <div th:replace="fragments/head::imports"></div>
 </head>
 <body>
-
-<div th:text="${product.description}">Product Name</div>
-<div th:each="option : ${product.options}">
-    <span th:text="${option.name}">Option name</span> : <span th:text="${option.value}">Option value</span>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3"
+             th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+        </div>
+        <div class="col-sm">
+            <b><p th:text="${product.productName}">Product Name</p></b>
+            <p>Rating: <span th:text="${#numbers.formatDecimal(product.rating,1,2)}">Rating</span></p>
+            <p>Price range: <span th:text="${product.minPrice}">min</span> - <span
+                    th:text="${product.maxPrice}">max</span></p>
+            <a class="btn-info" th:href="@{/productShop(id=__${product.id}__)}"><span th:text="${product.offers}">Number of offers</span>
+                offers</a>
+        </div>
+    </div>
+    Characteristics:
+    <div class="row" th:each="option : ${product.options}">
+        <div class="col-sm-2" th:text="${option.name}"><b>Option name</b></div>
+        :
+        <div class="col-sm" th:text="${option.value}">Option value
+        </div>
+    </div>
+    <br>
+    <br>
+    Reviews:
+    <div class="row">
+        <div style="border: 1px bisque solid; background-color: aliceblue;opacity: 0.5;" class="col-sm-12"
+             th:each="review : ${product.reviews}">
+            <p>
+                <span th:text="${review.userName}">Name</span> <span
+                    th:text="${review.userSecondName}">Second Name</span> on <span th:text="${review.date}"></span>
+            </p>
+            <p>Rating: <span th:text="${review.rating}">Rating</span></p>
+            <p th:text="${review.text}"></p>
+        </div>
+    </div>
 </div>
+
 <div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

@@ -22,7 +22,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true, exclude = "reviews")
+@ToString(callSuper = true, exclude = {"reviews","shopProduct","options"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "product", schema = "shop")

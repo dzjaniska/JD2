@@ -55,14 +55,14 @@ public class CreateProductController {
 
     @RequestMapping("/admin/createProduct")
     public String createPage(Product product) {
-        return "admin/createProduct";
+        return "admin/createProducts";
     }
 
     @RequestMapping(value = "/admin/createProduct", params = {"addRow"})
     public String createProductPage(Model model, Product product) {
         product.getOptions().add(new Option());
         model.addAttribute("product", product);
-        return "admin/createProduct";
+        return "admin/createProducts";
     }
 
     @RequestMapping(value = "/admin/createProduct", params = {"removeRow"})
@@ -70,7 +70,7 @@ public class CreateProductController {
         final Integer rowId = Integer.valueOf(req.getParameter("removeRow"));
         product.getOptions().remove(rowId.intValue());
         model.addAttribute("product", product);
-        return "admin/createProduct";
+        return "admin/createProducts";
     }
 
     @PostMapping("/admin/createProduct")
@@ -78,7 +78,7 @@ public class CreateProductController {
         product.getOptions().forEach(optionService::save);
         productService.save(product);
 
-        return "admin/createProduct";
+        return "admin/createProducts";
     }
 
 //    TODO

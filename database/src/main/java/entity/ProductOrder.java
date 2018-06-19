@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = {"product", "orders", "shop"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

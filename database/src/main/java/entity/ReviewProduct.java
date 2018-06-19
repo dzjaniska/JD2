@@ -19,7 +19,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true, exclude = {"user", "shop"})
+@ToString(callSuper = true, exclude = {"user", "product"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "review", schema = "shop")

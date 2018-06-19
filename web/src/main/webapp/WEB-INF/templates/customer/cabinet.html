@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product's catalog</title>
+    <div th:replace="fragments/head::imports"></div>
+</head>
+<body>
+<div th:replace="fragments/header::header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <span th:text="${customer.userInfo.name}"></span> <span th:text="${customer.userInfo.secondName}"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <form th:action="@{/registration.html}" method="post" th:object="${customer}">
+                <div class="form-group">
+                    <label for="customerLogin">Login
+                        <input class="form-control" id="customerLogin" type="text" th:field="*{login}">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="customerPassword">Password
+                        <input class="form-control" id="customerPassword" type="text" th:field="*{password}">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="customerName">Name
+                        <input class="form-control" id="customerName" type="text" th:field="*{userInfo.name}">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="customerSecondName">Second Name
+                        <input class="form-control" id="customerSecondName" type="text"
+                               th:field="*{userInfo.secondName}">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="customerSurname">Surname
+                        <input class="form-control" id="customerSurname" type="text" th:field="*{userInfo.surname}">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address
+                        <input class="form-control" id="address" type="text" th:field="*{address}">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success" value="SAVE">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" style="border: 3px solid black" th:each="order : ${orders}">
+        <div class="col-sm-12">Order #<span th:text="${order.orderId}">OrderId</span></div>
+        <div class="col-sm-12">Order date: <span th:text="${order.orderTime}">Time</span></div>
+        <div class="col-sm-12" th:each="product : ${order.products}">
+            <div class="row">
+                <a class="col-sm-3" th:href="@{/product(id=__${product.productId}__)}">
+                    <div th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+                    </div>
+                </a>
+                <div class="col-sm-7">
+                    <p th:text="${product.productName}">Product name</p>
+                    <p>Quantity <span th:text="${product.quantity}"></span></p>
+                </div>
+
+                <a th:href="@{/shop(id=__${product.shopId}__)}" class="col-sm-2">
+                    <div th:style="'background:url(' + ${product.shopLogo} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>

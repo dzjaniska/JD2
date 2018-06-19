@@ -13,6 +13,8 @@ import service.ShopService;
 import service.UserInfoService;
 import service.UserService;
 
+import java.time.LocalDateTime;
+
 @Controller
 public class RegistrationController {
 
@@ -47,18 +49,20 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String show1RegistrationPage(Customer customer, Admin admin) {
 
+        String address = "customer/cabinet";
         if (customer.getAddress() != null) {
             userInfoService.save(customer.getUserInfo());
             customer.setRole(Role.CUSTOMER);
             customer.setPassword(passwordEncoder.encode(customer.getPassword()));
             userService.save(customer);
         } else {
+            address = "admin/admin";
             userInfoService.save(admin.getUserInfo());
             shopService.save(admin.getShop());
             admin.setRole(Role.ADMIN);
             admin.setPassword(passwordEncoder.encode(admin.getPassword()));
             userService.save(admin);
         }
-        return "registration";
+        return address;
     }
 }
