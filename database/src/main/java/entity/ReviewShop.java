@@ -10,6 +10,7 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -39,6 +40,9 @@ public class ReviewShop extends BaseEntity<Long> {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(mappedBy = "reviews")
+    @ManyToMany
+    @JoinTable(name = "review_shop", schema = "shop",
+            joinColumns = {@JoinColumn(name = "review_id")},
+            inverseJoinColumns = {@JoinColumn(name = "shop_id")})
     private Set<Shop> shop;
 }

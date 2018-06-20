@@ -4,6 +4,9 @@ import entity.Category;
 import entity.Option;
 import entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.OptionRepository;
@@ -14,6 +17,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@CacheConfig(cacheNames = "oprions")
 public class OptionServiceImpl implements OptionService {
 
     private ProductRepository productRepository;
@@ -26,24 +30,14 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
+    @CacheEvict(allEntries = true)
     public Option save(Option option) {
         return optionRepository.save(option);
     }
 
     @Override
-    public List<Option> findAllByProduct(Product product) {
-        return optionRepository.findAllByProducts(product);
-    }
-
-    @Override
+    @Cacheable
     public List<Option> findAllByCategory(Category category) {
         return optionRepository.findAllByCategory(category);
-    }
-
-    @Override
-    public List<Option> findAll() {
-        List<Option> options = new ArrayList<>();
-        optionRepository.findAll().forEach(options::add);
-        return options;
     }
 }

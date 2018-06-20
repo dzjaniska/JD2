@@ -5,6 +5,9 @@ import dto.UserProductDto;
 import entity.Orders;
 import entity.ProductOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.OrderRepository;
@@ -14,6 +17,7 @@ import java.util.List;
 
 @Service
 @Transactional
+@CacheConfig(cacheNames = "orders")
 public class OrderServiceImpl implements OrderService {
 
     private OrderRepository orderRepository;
@@ -26,11 +30,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @CacheEvict(allEntries = true)
     public Orders save(Orders order) {
         return orderRepository.save(order);
     }
 
     @Override
+    @Cacheable
     public List<UserOrderDto> findAllByUserId(Long id) {
         List<UserOrderDto> dtos = new ArrayList<>();
 

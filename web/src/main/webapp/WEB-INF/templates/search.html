@@ -37,7 +37,7 @@
                     <span th:text="${product.offers}"></span> offers </a>
             </p>
             <p>Rating:
-                <span th:text="${product.rating == 0.00}?'No rating':${#numbers.formatDecimal(product.rating,1,2)}">Rating</span>
+                <span th:text="${product.rating}?'No rating':${#numbers.formatDecimal(product.rating,1,2)}">Rating</span>
             </p>
             <a th:href="@{/product(id=__${product.id}__)}">Details</a>
         </div>

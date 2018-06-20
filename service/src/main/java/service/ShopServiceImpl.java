@@ -56,9 +56,4 @@ public class ShopServiceImpl implements ShopService {
                         .collect(Collectors.toSet()))
                 .build();
     }
-
-    @Override
-    public List<Shop> findAllByProducts(Product product) {
-        return shopRepository.findAllByProducts(product);
-    }
 }

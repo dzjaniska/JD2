@@ -10,5 +10,4 @@ public interface OrderService {
     Orders save(Orders user);
 
     List<UserOrderDto> findAllByUserId(Long id);
-
 }

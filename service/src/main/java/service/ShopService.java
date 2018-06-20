@@ -13,6 +13,4 @@ public interface ShopService {
     Shop findById(Long id);
 
     ShopPageDto findByIdDto(Long id);
-
-    List<Shop> findAllByProducts(Product product);
 }

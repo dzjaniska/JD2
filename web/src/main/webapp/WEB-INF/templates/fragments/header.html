@@ -33,6 +33,11 @@
                     <input type="submit" th:value="Cabinet"/>
                 </form>
             </div>
+            <div class="my-2 my-lg-0" th:if="${#authorization.expression('hasAuthority(''CUSTOMER'')')}">
+                <form th:action="@{/customer/cart}" method="get">
+                    <input type="submit" th:value="Cart"/>
+                </form>
+            </div>
             <div class="my-2 my-lg-0" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
                 <form th:action="@{/admin/admin}" method="get">
                     <input type="submit" th:value="Administration"/>
@@ -41,6 +46,11 @@
             <div class="my-2 my-lg-0" th:if="${#authorization.expression('isAuthenticated()')}">
                 <form th:action="@{/logout}" method="post">
                     <input type="submit" th:value="Logout"/>
+                </form>
+            </div>
+            <div class="my-2 my-lg-0" th:if="${not #authorization.expression('isAuthenticated()')}">
+                <form th:action="@{/registration}" method="get">
+                    <input type="submit" th:value="Registration"/>
                 </form>
             </div>
             <div class="my-2 my-lg-0" th:if="${not #authorization.expression('isAuthenticated()')}">

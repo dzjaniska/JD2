@@ -3,17 +3,18 @@ package controller;
 import entity.Admin;
 import entity.Customer;
 import entity.Role;
+import entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import service.ShopService;
 import service.UserInfoService;
 import service.UserService;
-
-import java.time.LocalDateTime;
 
 @Controller
 public class RegistrationController {
@@ -63,6 +64,14 @@ public class RegistrationController {
             admin.setPassword(passwordEncoder.encode(admin.getPassword()));
             userService.save(admin);
         }
+
         return address;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public String handleException(Model model, Exception e) {
+        model.addAttribute("errorMessage", "This login is already taken. Please, reload this page and choose another login");
+
+        return "registration";
     }
 }

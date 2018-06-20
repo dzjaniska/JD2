@@ -10,9 +10,5 @@ public interface OptionService {
 
     Option save(Option option);
 
-    List<Option> findAllByProduct(Product product);
-
     List<Option> findAllByCategory(Category category);
-
-    List<Option> findAll();
 }

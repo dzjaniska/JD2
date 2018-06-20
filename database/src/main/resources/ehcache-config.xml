@@ -9,10 +9,15 @@
         <persistence strategy="localTempSwap"/>
     </defaultCache>
 
-    <cache name="products"
+    <cache name="options"
            maxElementsInMemory="500"
            eternal="false"
            timeToIdleSeconds="60"
            timeToLiveSeconds="60"/>
 
+    <cache name="orders"
+           maxElementsInMemory="500"
+           eternal="false"
+           timeToIdleSeconds="60"
+           timeToLiveSeconds="60"/>
 </ehcache>

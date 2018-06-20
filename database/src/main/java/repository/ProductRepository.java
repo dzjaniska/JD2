@@ -19,11 +19,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<Product> findFirstByDescription(String name);
 
-    Page<Product> findDistinctAllByCategory(Category category, Pageable pageable);
+//    Page<Product> findDistinctAllByCategory(Category category, Pageable pageable);
 
-    List<Product> findDistinctAllByCategoryAndOptionsIn(Category category, Option... options);
+    @Query("select p from Product p inner join p.shopProduct sp where p.category = :category group by p.id having sum(sp.quantity) >0")
+    List<Product> findDistinctAllByCategory(@Param("category") Category category);
 
-    List<Product> findDistinctAllByCategoryAndOptionsAndShopProductPriceBetween(Category category, Option option, Integer startPrice, Integer endPrice, Pageable pageable);
+    @Query("select p from Product p inner join p.options o inner join p.shopProduct sp where p.category = :category and o.id= :id group by p.id having sum(sp.quantity) >0  order by min(sp.price)")
+    List<Product> findDistinctAllByCategoryAndOptionsOrderByPrice(@Param("category") Category category, @Param("id") Long id);
 
     @Modifying
     @Query("UPDATE Product p set p.description= :name where p= :product")

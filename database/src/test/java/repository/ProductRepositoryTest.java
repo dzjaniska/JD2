@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,9 +33,6 @@ public class ProductRepositoryTest {
 
     @Autowired
     private ProductRepository productRepository;
-
-    @Autowired
-    private OptionRepository optionRepository;
 
     @Before
     public void init() {
@@ -90,29 +86,9 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void checkFindDistinctAllByCategoryAndOptionsIn() {
-        Option option1 = optionRepository.findFirstByNameAndValue(Parameter.YEAR, "2018");
-        Option option2 = optionRepository.findFirstByNameAndValue(Parameter.CAPACITY, "16GB");
-        Option option3 = optionRepository.findFirstByNameAndValue(Parameter.CASH, "1");
-        List<Product> productList = productRepository.findDistinctAllByCategoryAndOptionsIn(Category.RAM, option1, option2, option3);
-        assertEquals("ramModelName1", productList.get(0).getDescription());
+    public void findDistinctAllByCategoryQuery() {
+        List<Product> findDistinctAllByCategoryAndOptions = productRepository.findDistinctAllByCategoryAndOptionsOrderByPrice(Category.RAM, 3L);
+        System.out.println();
     }
 
-    @Test
-    public void checkFindAllByCategoryAndOptionsAndShopProductPriceBetween() {
-        Option option1 = optionRepository.findFirstByNameAndValue(Parameter.YEAR, "2018");
-        List<Product> all = productRepository.findDistinctAllByCategoryAndOptionsAndShopProductPriceBetween(Category.RAM, option1, 100, 400, PageRequest.of(1, 2));
-        final int expectedSize = 1;
-        assertEquals(expectedSize, all.size());
-    }
-
-    @Test
-    public void checkFindDistinctAllByCategoryAndOptionsAndShopProductPriceBetween() {
-        Option option = optionRepository.findFirstByNameAndValue(Parameter.YEAR, "2017");
-
-        List<Product> products = productRepository.findDistinctAllByCategoryAndOptionsAndShopProductPriceBetween(Category.CPU, option, 230, 320, PageRequest.of(0, 10));
-        int size = products.size();
-        final int expectedSize = 1;
-        assertEquals(expectedSize, size);
-    }
 }

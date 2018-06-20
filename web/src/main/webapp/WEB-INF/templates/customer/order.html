@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
+    <div th:replace="fragments/head::imports"></div>
 </head>
 <body>
-Your order has been processed!
-<form th:action="@{/logout}" method="post">
-    <input type="submit" th:value="Logout"/>
-</form>
+
+<div th:replace="fragments/header::header"></div>
+
+<div class="container">
+    Your order has been processed!
+</div>
+
+<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

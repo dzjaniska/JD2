@@ -17,19 +17,16 @@ public interface ProductService {
 
     CatalogDto findByIdCatalogItem(Long id);
 
-    Product findByIdWithShops(Long id);
-
     ProductDto findByIdWithShopsDto(Long id);
 
     Product save(Product product);
 
-    List<Product> findAll();
-
     CatalogPageDto findDistinctAllByCategory(Category category, Pageable pageable);
-
-    Optional<Product> findByName(String name);
 
     List<ShopProductDto> findAllByDescriptionContainingIgnoreCase(String name);
 
     List<CatalogDto> findAllByDescriptionContainingIgnoreCaseCatalog(String name);
+
+    CatalogPageDto findDistinctAllByCategoryAndOptionsOrderByPrice(Category category, Long id, Pageable pageable);
+
 }
