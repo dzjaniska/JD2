@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
                 .id(product.getId())
                 .productName(product.getDescription())
                 .productImage(product.getImage())
-                .rating(product.getReviews().stream().mapToDouble(ReviewProduct::getRating).average().orElse(Double.NaN))
+                .rating(product.getReviews().stream().mapToDouble(ReviewProduct::getRating).average().orElse(0.0))
                 .options(product.getOptions())
                 .maxPrice(product.getShopProduct().stream().map(ShopProduct::getPrice).max(Comparator.comparing(Integer::valueOf)).orElse(0))
                 .minPrice(product.getShopProduct().stream().map(ShopProduct::getPrice).min(Comparator.comparing(Integer::valueOf)).orElse(0))
@@ -138,6 +138,33 @@ public class ProductServiceImpl implements ProductService {
                 .productImage(it.getImage())
                 .productId(it.getId())
                 .build()));
+
+        return productDtos;
+    }
+
+    @Override
+    public List<CatalogDto> findAllByDescriptionContainingIgnoreCaseCatalog(String name) {
+        List<CatalogDto> productDtos = new ArrayList<>();
+
+        List<Product> products = productRepository.findAllByDescriptionContainingIgnoreCase(name);
+        for (Product product : products) {
+
+            List<ShopProduct> notEmptyShopProductList = product.getShopProduct()
+                    .stream()
+                    .filter(it -> it.getQuantity() > 0)
+                    .collect(Collectors.toList());
+
+            productDtos.add(new CatalogDto().builder()
+                    .id(product.getId())
+                    .productName(product.getDescription())
+                    .productImage(product.getImage())
+                    .rating(product.getReviews().stream().mapToDouble(ReviewProduct::getRating).average().orElse(Double.NaN))
+                    .options(product.getOptions())
+                    .maxPrice(notEmptyShopProductList.stream().map(ShopProduct::getPrice).max(Comparator.comparing(Integer::valueOf)).orElse(0))
+                    .minPrice(notEmptyShopProductList.stream().map(ShopProduct::getPrice).min(Comparator.comparing(Integer::valueOf)).orElse(0))
+                    .offers(notEmptyShopProductList.size())
+                    .build());
+        }
 
         return productDtos;
     }

@@ -30,4 +30,6 @@ public interface ProductService {
     Optional<Product> findByName(String name);
 
     List<ShopProductDto> findAllByDescriptionContainingIgnoreCase(String name);
+
+    List<CatalogDto> findAllByDescriptionContainingIgnoreCaseCatalog(String name);
 }

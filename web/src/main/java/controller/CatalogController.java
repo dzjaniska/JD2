@@ -1,5 +1,6 @@
 package controller;
 
+import dto.CatalogDto;
 import dto.CatalogPageDto;
 import entity.Category;
 import entity.Parameter;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import service.OptionService;
 import service.ProductService;
+
+import java.util.List;
 
 @Controller
 @SessionAttributes("product")
@@ -52,5 +55,15 @@ public class CatalogController {
         }
         model.addAttribute("productList", products);
         return "catalog";
+    }
+
+
+    @GetMapping("/search")
+    public String searchProduct(Model model,
+                              @RequestParam(value = "name", required = true) String name) {
+        List<CatalogDto> products = productService.findAllByDescriptionContainingIgnoreCaseCatalog(name);
+        model.addAttribute("productList", products);
+
+        return "search";
     }
 }

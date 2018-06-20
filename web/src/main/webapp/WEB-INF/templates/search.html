@@ -2,20 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Product's catalog</title>
+    <title>Shop Orders</title>
     <div th:replace="fragments/head::imports"></div>
 </head>
 <body>
 <div th:replace="fragments/header::header"></div>
 <div class="container">
     <div class="row">
-        <form class="form-inline" style="min-width: 100%" th:action="@{/search}" method="get">
-            <input class="form-control" style="min-width: 90%" type="text" id="search" name="name" placeholder="Search">
+        <form class="form-inline" th:action="@{/search}" style="min-width: 100%" method="get">
+            <input class="form-control" type="text" id="search" name="name" style="min-width: 90%" placeholder="Search">
             <input type="submit" value="Search" class="btn btn-info">
         </form>
     </div>
 </div>
-<div class="container" th:if="${productList} != null" th:each="product:${productList.products}">
+<div class="container" th:each="product:${productList}">
     <div class="row">
         <a th:href="@{/product(id=__${product.id}__)}" class="col-sm-3">
             <div th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
@@ -43,25 +43,7 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <div class="row"
-         th:with="currentUrl=(${#httpServletRequest.requestURI + '?' + #strings.defaultString(#httpServletRequest.queryString, '')})">
-        <div class="col-sm-1"
-             th:if="${productList.pages} &gt 1"
-             th:each="pageN : ${#numbers.sequence(0, productList.pages-1)}">
-            <a th:href="@{${currentUrl}(page=__${pageN}__)}" th:text="${pageN+1}"></a>
-        </div>
-        <div class="col-sm-1"
-             th:if="${productList.pages} eq 1">
-            <a th:href="@{${currentUrl}(page=0)}">1</a>
-        </div>
-        <div class="col-sm-12"
-             th:if="${productList.pages} eq 0">
-            Sorry, products are not found.
-        </div>
-    </div>
-</div>
 
-<!--<div th:replace="fragments/footer::footer"></div>-->
+<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

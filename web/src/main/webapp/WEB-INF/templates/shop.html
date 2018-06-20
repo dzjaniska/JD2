@@ -6,14 +6,16 @@
     <div th:replace="fragments/head::imports"></div>
 </head>
 <body>
+<div th:replace="fragments/header::header"></div>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-3"
              th:style="'background:url(' + ${shop.shopLogo} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
         </div>
         <div class="col-sm">
-            <b><p style="font: 18px" th:text="${shop.shopName}">Shop Name</p></b>
-            <p>Rating: <span th:text="${#numbers.formatDecimal(shop.rating,1,2)}">Rating</span></p>
+            <b style="font: 18px" th:text="${shop.shopName}">Shop Name</b>
+            <p>Rating: <span th:text="${shop.rating != '0.0'}?'No rating':${#numbers.formatDecimal(shop.rating,1,2)}">Rating</span></p>
         </div>
     </div>
     <div class="row" th:text="${shop.description}">Description</div>
@@ -33,17 +35,16 @@
     </div>
     <br>
     <br>
-    <div class="row">
-        <form th:action="@{/product}" method="post" th:object="${reviewShop}" style="min-width: 100%">
+    <div class="row" th:if="${#authorization.expression('hasAuthority(''CUSTOMER'')')}">
+        <form th:action="@{/shop}" method="post" th:object="${reviewShop}" style="min-width: 100%">
             <div class="form-group">
-                <label for="text">Review text:
+                <label for="text" style="width: 100%">Review text:
                     <textarea class="form-control" id="text" th:field="*{text}"></textarea>
                 </label>
                 <br>
                 <select class="selectpicker" name="option" id="parameter" th:field="*{rating}">
                     <option th:value="${rating}" th:each="rating : ${#numbers.sequence(1,10)}"
                             th:text="${rating}">Rating
-                    </option>
                     </option>
                 </select>
                 <input type="hidden" th:attr="name='shopId'" th:value="${shop.id}">

@@ -13,7 +13,9 @@
         </div>
         <div class="col-sm">
             <b><p th:text="${product.productName}">Product Name</p></b>
-            <p>Rating: <span th:text="${#numbers.formatDecimal(product.rating,1,2)}">Rating</span></p>
+            <p>Rating: <span
+                    th:text="${product.rating != '0.0'}?'No rating':${#numbers.formatDecimal(product.rating,1,2)}">Rating</span>
+            </p>
             <p>Price range: <span th:text="${product.minPrice}">min</span> - <span
                     th:text="${product.maxPrice}">max</span></p>
             <a class="btn-info" th:href="@{/productShop(id=__${product.id}__)}"><span th:text="${product.offers}">Number of offers</span>
@@ -43,21 +45,24 @@
     </div>
     <br>
     <br>
-    <div class="row">
+    <div class="row" th:if="${#authorization.expression('hasAuthority(''CUSTOMER'')')}">
         <form th:action="@{/product}" method="post" th:object="${reviewProduct}" style="min-width: 100%">
+            <input type="hidden" th:attr="name='productId'" th:value="${product.id}">
             <div class="form-group">
-                <label for="text">Review text:
+                <label for="text" style="width: 100%">Review text:
                     <textarea class="form-control" id="text" th:field="*{text}"></textarea>
                 </label>
-                <br>
-                <select class="selectpicker" name="option" id="parameter" th:field="*{rating}">
-                    <option th:value="${rating}" th:each="rating : ${#numbers.sequence(1,10)}"
-                            th:text="${rating}">Rating
-                    </option>
-                    </option>
-                </select>
-                <input type="hidden" th:attr="name='productId'" th:value="${product.id}">
-                <input type="submit" value="Send review">
+                <div class="input-group">
+                    <select class="custom-select" name="option" id="parameter" th:field="*{rating}">
+                        <option th:value="${rating}" th:each="rating : ${#numbers.sequence(1,10)}"
+                                th:text="${rating}">Rating
+                        </option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Send review</button>
+                    </div>
+                </div>
+                <!--<input type="submit" value="Send review">-->
             </div>
         </form>
     </div>

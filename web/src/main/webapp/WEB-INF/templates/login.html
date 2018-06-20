@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <div th:replace="fragments/head::imports"></div>
 </head>
 <body>
+<div th:replace="fragments/header::header"></div>
+
 <form th:action="@{/login}" method="post">
     <label for="username">Username:
         <input type="text" name="username" id="username">
@@ -14,5 +17,7 @@
     </label><br>
     <input type="submit" value="Login">
 </form>
+
+<div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

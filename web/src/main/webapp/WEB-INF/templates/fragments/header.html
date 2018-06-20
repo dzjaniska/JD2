@@ -6,24 +6,50 @@
 </head>
 <body>
 <div th:fragment="header">
-    <header class="header">
-        <div class="row">
-            <div class="col-sm-2" th:each="category : ${categories}">
-                <a th:href="@{/catalog?category=__${category}__}" href="/catalog?category=${category}"
-                   th:text="${category}"> Category</a>
-            </div>
-            <div class="col-sm-2">
-                <form th:action="@{/customer/cart}" method="get">
-                    <input type="submit" th:value="Cart"/>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/catalog">Shop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/catalog?category=RAM">RAM <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/catalog?category=HDD">HDD <span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/catalog?category=CPU">CPU <span
+                            class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <div class="my-2 my-lg-0" th:if="${#authorization.expression('hasAuthority(''CUSTOMER'')')}">
+                <form th:action="@{/customer/cabinet}" method="get">
+                    <input type="submit" th:value="Cabinet"/>
                 </form>
             </div>
-            <div class="col-sm-2">
+            <div class="my-2 my-lg-0" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+                <form th:action="@{/admin/admin}" method="get">
+                    <input type="submit" th:value="Administration"/>
+                </form>
+            </div>
+            <div class="my-2 my-lg-0" th:if="${#authorization.expression('isAuthenticated()')}">
                 <form th:action="@{/logout}" method="post">
                     <input type="submit" th:value="Logout"/>
                 </form>
             </div>
+            <div class="my-2 my-lg-0" th:if="${not #authorization.expression('isAuthenticated()')}">
+                <form th:action="@{/login}" method="get">
+                    <input type="submit" th:value="Login"/>
+                </form>
+            </div>
         </div>
-    </header>
+    </nav>
 </div>
 </body>
 </html>
