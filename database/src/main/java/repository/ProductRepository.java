@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, CustomProductRepository {
 
     Optional<Product> findFirstByDescription(String name);
 
-    @Query("select p from Product p inner join p.shopProduct sp where p.category = :category group by p.id having sum(sp.quantity) >0")
-    List<Product> findDistinctAllByCategory(@Param("category") Category category);
+    @Query("select p from Product p inner join p.options o inner join p.shopProduct sp where p.category = :category and o.id= :id group by p.id having sum(sp.quantity) >0 ")
+    List<Product> findDistinctAllByCategoryAndOptions(@Param("category") Category category, @Param("id") Long id);
 
     @Query("select p from Product p inner join p.options o inner join p.shopProduct sp where p.category = :category and o.id= :id group by p.id having sum(sp.quantity) >0  order by min(sp.price)")
     Page<Product> findDistinctAllByCategoryAndOptionsOrderByPrice(@Param("category") Category category, @Param("id") Long id, Pageable pageRequest);
@@ -28,11 +28,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("UPDATE Product p set p.description= :name where p= :product")
     int updateProduct(@Param("name") String name, @Param("product") Product product);
 
+    List<Product> findAllByDescriptionContainingIgnoreCase(String name);
+
     @Query("select p from Product p inner join p.shopProduct sp where lower(p.description) like %?1% group by p.id having sum(sp.quantity) >0")
     List<Product> findAllByDescriptionContainingIgnoreCaseCatalog(String name);
 
-    List<Product> findAllByDescriptionContainingIgnoreCase(String name);
-
     @Query("select p from Product p inner join p.shopProduct sp where p.category = :category group by p.id having sum(sp.quantity) >0")
-    Page<Product> test(@Param("category") Category category, Pageable pageRequest);
+    Page<Product> findDistinctAllByCategory(@Param("category") Category category, Pageable pageRequest);
 }

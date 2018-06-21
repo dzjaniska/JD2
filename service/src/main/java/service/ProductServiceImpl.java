@@ -19,7 +19,9 @@ import repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -85,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
-//    for admin search
+    //    for admin search
     @Override
     public List<ShopProductDto> findAllByDescriptionContainingIgnoreCase(String name) {
         List<ShopProductDto> productDtos = new ArrayList<>();
@@ -100,7 +102,7 @@ public class ProductServiceImpl implements ProductService {
         return productDtos;
     }
 
-//    for user search
+    //    for user search
     @Override
     public List<CatalogDto> findAllByDescriptionContainingIgnoreCaseCatalog(String name) {
         List<Product> products = productRepository.findAllByDescriptionContainingIgnoreCaseCatalog(name.toLowerCase());
@@ -118,11 +120,29 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public CatalogPageDto findDistinctAllByCategory(Category category, Pageable pageable) {
-        Page<Product> products = productRepository.test(category, pageable);
+        Page<Product> products = productRepository.findDistinctAllByCategory(category, pageable);
         List<CatalogDto> catalogDtoList = createCatalogDtoList(products);
 
         return new CatalogPageDto(catalogDtoList, products.getTotalPages());
     }
+
+    @Override
+    public CatalogPageDto findDistinctAllByCategoryAndOptions(Category category, Long[] ids) {
+        List<Product> products = productRepository.findDistinctAllByCategoryAndOptionsCustom(category, ids);
+        List<CatalogDto> catalogDtoList = createCatalogDtoList(products);
+
+        return new CatalogPageDto();
+    }
+
+   /* @Override
+    public CatalogPageDto findDistinctAllByCategoryAndOptions(Category category, Long[] ids, Pageable pageable) {
+        final int size = ids.length;
+        Map<Product, Integer> productMap = addProductsToMap(category, ids);
+        List<Product> productList = getAllOptionsProducts(size, productMap);
+        List<CatalogDto> catalogDtoList = createCatalogDtoList(productList);
+
+        return new CatalogPageDto(getProductsOnPage(pageable, catalogDtoList), getPagesNumber(pageable, catalogDtoList));
+    }*/
 
     private <T extends Iterable<Product>> List<CatalogDto> createCatalogDtoList(T products) {
         List<CatalogDto> catalogDtoList = new ArrayList<>();
@@ -139,5 +159,41 @@ public class ProductServiceImpl implements ProductService {
                 .build()));
 
         return catalogDtoList;
+    }
+
+    private List<CatalogDto> getProductsOnPage(Pageable pageable, List<CatalogDto> catalogDtoList) {
+        return catalogDtoList.stream().skip(pageable.getOffset()).limit(pageable.getPageSize()).collect(Collectors.toList());
+    }
+
+    private int getPagesNumber(Pageable pageable, List<CatalogDto> catalogDtoList) {
+        return (int) Math.ceil((double) catalogDtoList.size() / pageable.getPageSize());
+    }
+
+    private Map<Product, Integer> addProductsToMap(Category category, Long[] ids) {
+        Map<Product, Integer> prods = new HashMap<>();
+
+        for (Long optionId : ids) {
+            productRepository.findDistinctAllByCategoryAndOptions(category, optionId).forEach(it -> {
+                if (prods.containsKey(it)) {
+                    prods.put(it, prods.get(it) + 1);
+                } else {
+                    prods.put(it, 1);
+                }
+            });
+        }
+
+        return prods;
+    }
+
+    private List<Product> getAllOptionsProducts(int targetSize, Map<Product, Integer> prods) {
+        List<Product> productList = new ArrayList<>();
+
+        for (Map.Entry<Product, Integer> entry : prods.entrySet()) {
+            if (entry.getValue() == targetSize) {
+                productList.add(entry.getKey());
+            }
+        }
+
+        return productList;
     }
 }

@@ -6,7 +6,6 @@ import entity.Category;
 import entity.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,14 +44,21 @@ public class CatalogController {
     public String showCatalog(Model model,
                               @RequestParam(value = "sort", required = false, defaultValue = "description") String sort,
                               @RequestParam(value = "category", required = false) String category,
-                              @RequestParam(value = "option", required = false) String option,
+                              @RequestParam(value = "option", required = false) Long[] optionId,
                               @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
                               @RequestParam(value = "quantity", required = false, defaultValue = "5") Integer size) {
         CatalogPageDto products = null;
 
         if (category != null) {
-            products = productService.findDistinctAllByCategory(Category.valueOf(category), PageRequest.of(page, size, new Sort(Sort.Direction.ASC, sort)));
+            if (optionId != null) {
+                products = productService.findDistinctAllByCategoryAndOptions(Category.valueOf(category), optionId);
+            } else {
+                products = productService.findDistinctAllByCategory(Category.valueOf(category), PageRequest.of(page, size));
+            }
+        } else {
+            model.addAttribute("greetings", "Welcome to our shop! Please, choose category");
         }
+
         model.addAttribute("productList", products);
         return "catalog";
     }

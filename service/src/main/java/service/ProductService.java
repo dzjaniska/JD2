@@ -27,4 +27,7 @@ public interface ProductService {
     CatalogPageDto findDistinctAllByCategoryAndOptionsOrderByPrice(Category category, Long id, Pageable pageable);
 
     CatalogPageDto findDistinctAllByCategory(Category category, Pageable pageable);
+
+//    CatalogPageDto findDistinctAllByCategoryAndOptions(Category category, Long[] id, Pageable pageable);
+    CatalogPageDto findDistinctAllByCategoryAndOptions(Category category, Long[] id);
 }
