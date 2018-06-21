@@ -60,7 +60,7 @@ public class CatalogController {
 
     @GetMapping("/search")
     public String searchProduct(Model model,
-                              @RequestParam(value = "name", required = true) String name) {
+                                @RequestParam(value = "name", required = true) String name) {
         List<CatalogDto> products = productService.findAllByDescriptionContainingIgnoreCaseCatalog(name);
         model.addAttribute("productList", products);
 

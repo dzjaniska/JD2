@@ -1,7 +1,8 @@
 package repository;
 
 import config.TestConfiguration;
-import entity.Shop;
+import entity.Orders;
+import entity.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,18 +12,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import util.DatabaseHelper;
 
-import static org.junit.Assert.assertNotNull;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = TestConfiguration.class)
 @Transactional
-public class ShopRepositoryTest {
+public class OrderRepositoryTest {
 
     @Autowired
     private DatabaseHelper databaseHelper;
 
     @Autowired
-    private ShopRepository shopRepository;
+    private OrderRepository orderRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Before
     public void init() {
@@ -31,9 +37,10 @@ public class ShopRepositoryTest {
     }
 
     @Test
-    public void checkSave() {
-        Shop logo = new Shop("111", "123", "logo", 123222L);
-        Shop save = shopRepository.save(logo);
-        assertNotNull(save);
+    public void findAllByUserId() {
+        User user = userRepository.findFirstByLogin("customer1");
+        List<Orders> orders = orderRepository.findAllByUserId(user.getId());
+        final int expectedSize = 2;
+        assertEquals(expectedSize, orders.size());
     }
 }

@@ -1,7 +1,6 @@
 package repository;
 
 import entity.Category;
-import entity.Option;
 import entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,17 +18,21 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<Product> findFirstByDescription(String name);
 
-//    Page<Product> findDistinctAllByCategory(Category category, Pageable pageable);
-
     @Query("select p from Product p inner join p.shopProduct sp where p.category = :category group by p.id having sum(sp.quantity) >0")
     List<Product> findDistinctAllByCategory(@Param("category") Category category);
 
     @Query("select p from Product p inner join p.options o inner join p.shopProduct sp where p.category = :category and o.id= :id group by p.id having sum(sp.quantity) >0  order by min(sp.price)")
-    List<Product> findDistinctAllByCategoryAndOptionsOrderByPrice(@Param("category") Category category, @Param("id") Long id);
+    Page<Product> findDistinctAllByCategoryAndOptionsOrderByPrice(@Param("category") Category category, @Param("id") Long id, Pageable pageRequest);
 
     @Modifying
     @Query("UPDATE Product p set p.description= :name where p= :product")
     int updateProduct(@Param("name") String name, @Param("product") Product product);
 
+    @Query("select p from Product p inner join p.shopProduct sp where lower(p.description) like %?1% group by p.id having sum(sp.quantity) >0")
+    List<Product> findAllByDescriptionContainingIgnoreCaseCatalog(String name);
+
     List<Product> findAllByDescriptionContainingIgnoreCase(String name);
+
+    @Query("select p from Product p inner join p.shopProduct sp where p.category = :category group by p.id having sum(sp.quantity) >0")
+    Page<Product> test(@Param("category") Category category, Pageable pageRequest);
 }

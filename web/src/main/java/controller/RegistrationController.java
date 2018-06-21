@@ -3,7 +3,6 @@ package controller;
 import entity.Admin;
 import entity.Customer;
 import entity.Role;
-import entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

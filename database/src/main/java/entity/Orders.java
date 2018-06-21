@@ -14,13 +14,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true,exclude = "products")
+@ToString(callSuper = true, exclude = "products")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders", schema = "shop")
@@ -33,9 +34,9 @@ public class Orders extends BaseEntity<Long> {
     @Column(name = "order_time")
     private LocalDateTime orderTime;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "delivery_time")
-    private LocalDateTime deliveryTime;
+    private LocalDate deliveryTime;
 
     @ManyToMany
     @JoinTable(name = "product_order", schema = "shop",
@@ -43,7 +44,7 @@ public class Orders extends BaseEntity<Long> {
             inverseJoinColumns = {@JoinColumn(name = "product_id")})
     private List<Product> products;
 
-    public Orders(User user, LocalDateTime orderTime, LocalDateTime deliveryTime) {
+    public Orders(User user, LocalDateTime orderTime, LocalDate deliveryTime) {
         this.user = user;
         this.orderTime = orderTime;
         this.deliveryTime = deliveryTime;

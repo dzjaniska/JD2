@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import util.DatabaseHelper;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -87,8 +86,6 @@ public class ProductRepositoryTest {
 
     @Test
     public void findDistinctAllByCategoryQuery() {
-        List<Product> findDistinctAllByCategoryAndOptions = productRepository.findDistinctAllByCategoryAndOptionsOrderByPrice(Category.RAM, 3L);
-        System.out.println();
     }
 
 }

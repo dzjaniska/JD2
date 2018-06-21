@@ -2,7 +2,6 @@ package service;
 
 import entity.Category;
 import entity.Option;
-import entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import repository.OptionRepository;
 import repository.ProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

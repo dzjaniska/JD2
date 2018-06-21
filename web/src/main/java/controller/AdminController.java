@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import service.OrderService;
 import service.ProductOrderService;
 import service.ProductService;
 import service.ShopProductService;
-import service.ShopService;
 import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;

@@ -147,7 +147,7 @@ CREATE TABLE orders (
   id            BIGSERIAL PRIMARY KEY,
   user_id       BIGINT    NOT NULL REFERENCES "user" (id),
   order_time    TIMESTAMP NOT NULL,
-  delivery_time TIMESTAMP NOT NULL
+  delivery_time DATE NOT NULL
 );
 
 CREATE TABLE product_order (

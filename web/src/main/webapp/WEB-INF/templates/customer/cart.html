@@ -8,7 +8,7 @@
 <body>
 <div th:replace="fragments/header::header"></div>
 
-<div class="container" style="color: red"  th:text="${errorMessage}"></div>
+<div class="container" style="color: red" th:text="${errorMessage}"></div>
 
 <div class="container">
     <form th:action="@{/customer/cart}" method="post" th:object="${orderDto}">
@@ -36,11 +36,14 @@
                 <p>
                     <span th:text="${product.price}">Price</span>
                 </p>
-                    <button type="submit" name="removeRow" th:value="${rowStat.index}">Remove product</button>
+                <button type="submit" name="removeRow" th:value="${rowStat.index}">Remove product</button>
             </div>
         </div>
-        <div class="row">
-            <input type="datetime-local" th:field="*{order.deliveryTime}">
+        <div class="row" th:if="${#lists.size(products)} &lt 1">
+            <p>Cart is empty. Add products and spend your money!</p>
+        </div>
+        <div class="row" th:if="${#lists.size(products)} &gt 0">
+            <input type="date" th:field="*{order.deliveryTime}">
             <input type="submit" value="Make Order">
         </div>
     </form>

@@ -9,7 +9,6 @@ import entity.Product;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
 
@@ -21,12 +20,11 @@ public interface ProductService {
 
     Product save(Product product);
 
-    CatalogPageDto findDistinctAllByCategory(Category category, Pageable pageable);
-
     List<ShopProductDto> findAllByDescriptionContainingIgnoreCase(String name);
 
     List<CatalogDto> findAllByDescriptionContainingIgnoreCaseCatalog(String name);
 
     CatalogPageDto findDistinctAllByCategoryAndOptionsOrderByPrice(Category category, Long id, Pageable pageable);
 
+    CatalogPageDto findDistinctAllByCategory(Category category, Pageable pageable);
 }

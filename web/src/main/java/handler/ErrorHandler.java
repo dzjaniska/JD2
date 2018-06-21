@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class ErrorHandler {
 
-    public static final Logger LOGGER=LoggerFactory.getLogger(ExceptionHandler.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandler.class);
 
-    @ResponseStatus(value = HttpStatus.NOT_FOUND,reason = "Exсeption occured")
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Exсeption occured")
     @ExceptionHandler(Exception.class)
-    public void handleException(){
+    public void handleException() {
         LOGGER.error("Exception handler executed");
     }
 }

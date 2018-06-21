@@ -15,7 +15,8 @@ public class LoggableAspect {
     private static final String REPORTS_DIVIDER = "<--------------------------------------------------------->";
 
     @Pointcut("within(service..*)")
-    public void services() {}
+    public void services() {
+    }
 
     @Around("services()")
     public Object getServiceLog(ProceedingJoinPoint joinPoint) {

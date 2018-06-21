@@ -71,6 +71,7 @@ public class CabinetController {
     public String userCart(Model model, OrderDto orderDto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = (Customer) userService.findFirstByLogin(auth.getName());
+        orderDto.getProductOrders().clear();
         List<CartProductDto> products = getProductsToShow(orderDto);
 
         model.addAttribute("products", products);

@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface ShopRepository extends CrudRepository<Shop, Long> {
 
-    List<Shop> findAllByProducts(Product product);
+    Shop findFirstByName(String name);
 }

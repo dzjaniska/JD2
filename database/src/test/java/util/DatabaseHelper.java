@@ -177,10 +177,10 @@ public class DatabaseHelper {
         entityManager.persist(new ReviewProduct("shopProductText", 2, LocalDate.now(), customer2, new HashSet<Product>(Arrays.asList(product2))));
         entityManager.persist(new ReviewProduct("shopProductText", 1, LocalDate.now(), customer1, new HashSet<Product>(Arrays.asList(product4))));
 
-        Orders order1 = new Orders(customer1, LocalDateTime.now(), LocalDateTime.now());
-        Orders order2 = new Orders(customer1, LocalDateTime.now(), LocalDateTime.now());
-        Orders order3 = new Orders(customer2, LocalDateTime.now(), LocalDateTime.now());
-        Orders order4 = new Orders(customer2, LocalDateTime.now(), LocalDateTime.now());
+        Orders order1 = new Orders(customer1, LocalDateTime.now(), LocalDate.now());
+        Orders order2 = new Orders(customer1, LocalDateTime.now(), LocalDate.now());
+        Orders order3 = new Orders(customer2, LocalDateTime.now(), LocalDate.now());
+        Orders order4 = new Orders(customer2, LocalDateTime.now(), LocalDate.now());
         entityManager.persist(order1);
         entityManager.persist(order2);
         entityManager.persist(order3);

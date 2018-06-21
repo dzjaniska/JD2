@@ -15,7 +15,8 @@
         </div>
         <div class="col-sm">
             <b style="font: 18px" th:text="${shop.shopName}">Shop Name</b>
-            <p>Rating: <span th:text="${shop.rating != '0.0'}?'No rating':${#numbers.formatDecimal(shop.rating,1,2)}">Rating</span></p>
+            <p>Rating: <span th:text="${shop.rating != '0.0'}?'No rating':${#numbers.formatDecimal(shop.rating,1,2)}">Rating</span>
+            </p>
         </div>
     </div>
     <div class="row" th:text="${shop.description}">Description</div>

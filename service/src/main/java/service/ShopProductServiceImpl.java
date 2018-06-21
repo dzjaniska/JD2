@@ -64,6 +64,6 @@ public class ShopProductServiceImpl implements ShopProductService {
                 .quantity(it.getQuantity())
                 .build()));
 
-    return productList;
+        return productList;
     }
 }

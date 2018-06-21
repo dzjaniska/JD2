@@ -2,7 +2,6 @@ package service;
 
 import entity.Category;
 import entity.Option;
-import entity.Product;
 
 import java.util.List;
 
