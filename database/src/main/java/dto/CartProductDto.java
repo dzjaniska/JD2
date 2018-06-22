@@ -27,4 +27,5 @@ public class CartProductDto {
 
     private Long shopId;
     private Integer availableQuantity;
+    private Long version;
 }

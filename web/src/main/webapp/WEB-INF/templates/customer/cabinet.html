@@ -13,47 +13,8 @@
             <span th:text="${customer.userInfo.name}"></span> <span th:text="${customer.userInfo.secondName}"></span>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm">
-            <form th:action="@{/registration.html}" method="post" th:object="${customer}">
-                <div class="form-group">
-                    <label for="customerLogin">Login
-                        <input class="form-control" id="customerLogin" type="text" th:field="*{login}">
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="customerPassword">Password
-                        <input class="form-control" id="customerPassword" type="text" th:field="*{password}">
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="customerName">Name
-                        <input class="form-control" id="customerName" type="text" th:field="*{userInfo.name}">
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="customerSecondName">Second Name
-                        <input class="form-control" id="customerSecondName" type="text"
-                               th:field="*{userInfo.secondName}">
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="customerSurname">Surname
-                        <input class="form-control" id="customerSurname" type="text" th:field="*{userInfo.surname}">
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="address">Address
-                        <input class="form-control" id="address" type="text" th:field="*{address}">
-                    </label>
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-success" value="SAVE">
-                </div>
-            </form>
-        </div>
-    </div>
     <div class="row" style="border: 3px solid black" th:each="order : ${orders}">
+        Your orders:
         <div class="col-sm-12">Order #<span th:text="${order.orderId}">OrderId</span></div>
         <div class="col-sm-12">Order date: <span th:text="${order.orderTime}">Time</span></div>
         <div class="col-sm-12" th:each="product : ${order.products}">

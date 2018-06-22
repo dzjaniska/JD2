@@ -15,14 +15,15 @@
         </div>
         <div class="col-sm">
             <b style="font: 18px" th:text="${shop.shopName}">Shop Name</b>
-            <p>Rating: <span th:text="${shop.rating != '0.0'}?'No rating':${#numbers.formatDecimal(shop.rating,1,2)}">Rating</span>
+            <p>Rating: <span th:text="${shop.rating} == '0.0'?'No rating':${#numbers.formatDecimal(shop.rating,1,2)}">Rating</span>
             </p>
         </div>
     </div>
     <div class="row" th:text="${shop.description}">Description</div>
     <br>
     <br>
-    Reviews:
+    <span>Reviews: </span>
+    <span th:if="${#lists.size(shop.reviews)} eq 0"> no reviews yet.</span>
     <div class="row">
         <div style="border: 1px bisque solid; background-color: aliceblue;opacity: 0.5;" class="col-sm-12"
              th:each="review : ${shop.reviews}">
@@ -30,12 +31,17 @@
                 <span th:text="${review.userName}">Name</span> <span
                     th:text="${review.userSecondName}">Second Name</span> on <span th:text="${review.date}"></span>
             </p>
-            <p>Rating: <span th:text="${review.rating}">Rating</span></p>
+            <p>Rating: <span
+                    th:text="${review.rating} == '0.0'?'No rating':${#numbers.formatDecimal(review.rating,1,2)}">Rating</span>
+            </p>
             <p th:text="${review.text}"></p>
         </div>
     </div>
     <br>
     <br>
+    <div class="row justify-content-md-center" th:if="${not #authorization.expression('isAuthenticated()')}">
+        Only authenticated users can leave reviews. Please, login.
+    </div>
     <div class="row" th:if="${#authorization.expression('hasAuthority(''CUSTOMER'')')}">
         <form th:action="@{/shop}" method="post" th:object="${reviewShop}" style="min-width: 100%">
             <div class="form-group">

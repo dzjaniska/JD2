@@ -9,12 +9,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import util.DatabaseHelper;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -86,6 +89,8 @@ public class ProductRepositoryTest {
 
     @Test
     public void findDistinctAllByCategoryQuery() {
+        List description = productRepository.findDistinctAllByCategoryAndOptionsCustom(Category.RAM, Arrays.asList(Arrays.asList(1L,2L,3L,4L),Arrays.asList(8L,7L,6L,5L)), "description", PageRequest.of(1, 1));
+        assertEquals(description.size(),3);
     }
 
 }

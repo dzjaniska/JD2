@@ -7,17 +7,28 @@
 </head>
 <body>
 <div th:replace="fragments/header::header"></div>
-
-<form th:action="@{/login}" method="post">
-    <label for="username">Username:
-        <input type="text" name="username" id="username">
-    </label><br>
-    <label for="password">Password:
-        <input type="password" name="password" id="password">
-    </label><br>
-    <input type="submit" value="Login">
-</form>
-
+<div>
+    <a href="?language=ru_RU">Русский</a><br>
+    <a href="?language=en_US">English</a>
+</div>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <form th:action="@{/login}" method="post">
+            <div class="form-control">
+                <label for="username">
+                    <span th:text="#{login.login}">Login:</span>
+                    <input type="text" name="username" id="username"/>
+                </label>
+            </div>
+            <div class="form-control">
+                <label for="password">
+                    <span th:text="#{login.pass}">Password:</span>
+                    <input type="password" name="password" id="password">
+                </label></div>
+            <input type="submit" value="Login" th:value="#{login.enter}"/>
+        </form>
+    </div>
+</div>
 <div th:replace="fragments/footer::footer"></div>
 </body>
 </html>

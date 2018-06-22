@@ -1,6 +1,5 @@
 package dto;
 
-import entity.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

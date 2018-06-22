@@ -13,6 +13,8 @@ public interface ShopProductService {
 
     ShopProduct findByProductAndShop(Long productId, Long shopId);
 
+    ShopProduct findByProductAndShopAndVersion(Long productId, Long shopId, Long version);
+
     ShopProduct save(ShopProduct shopProduct);
 
     List<ShopProductDto> findAllByShopIdAndQuantityGreaterThan(Long id);

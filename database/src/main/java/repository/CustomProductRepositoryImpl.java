@@ -37,8 +37,6 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
         }
 
         List<Product> resultList = query.getResultList();
-//        final long currentTotal = pageable.getOffset() + pageable.getPageSize();
-//        Page<Product> products = new PageImpl<>(resultList, pageable, currentTotal);
         transaction.commit();
 
         return resultList;
@@ -51,8 +49,8 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
             if (i == ids.size() + 1) {
                 stringBuilder.append(" inner join p.options o inner join p.shopProduct sp where p.category = (?1) and o.id in (?" + (i) + ")");
             } else {
-                stringBuilder.append(" inner join p.options o inner join p.shopProduct sp where p.category = (?1) and o.id in (?" + (i) + ") and p.id= some " +
-                        "(select distinct p from Product p");
+                stringBuilder.append(" inner join p.options o inner join p.shopProduct sp where p.category = (?1) and o.id in (?" + (i) + ") and p.id= some "
+                        + "(select distinct p from Product p");
             }
         }
         for (int i = 0; i < ids.size() - 1; i++) {

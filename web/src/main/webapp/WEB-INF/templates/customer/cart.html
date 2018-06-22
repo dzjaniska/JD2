@@ -19,6 +19,8 @@
             <div class="col-sm-7">
                 <input type="hidden" th:attr="name='productOrders[' + ${rowStat.index} + '].productId'"
                        th:value="${product.productId}">
+                <input type="hidden" th:attr="name='productOrders[' + ${rowStat.index} + '].version'"
+                       th:value="${product.version}">
                 <input type="hidden" th:attr="name='productOrders[' + ${rowStat.index} + '].shopId'"
                        th:value="${product.shopId}">
                 <p th:text="${product.productName}">Product name</p>

@@ -159,7 +159,7 @@ public class ProductServiceImpl implements ProductService {
                 .id(it.getId())
                 .productName(it.getDescription())
                 .productImage(it.getImage())
-                .rating(it.getReviews().stream().mapToDouble(ReviewProduct::getRating).average().orElse(Double.NaN))
+                .rating(it.getReviews().stream().mapToDouble(ReviewProduct::getRating).average().orElse(0.0))
                 .options(it.getOptions())
                 .maxPrice(it.getShopProduct().stream().map(ShopProduct::getPrice).max(Comparator.comparing(Integer::valueOf)).orElse(0))
                 .minPrice(it.getShopProduct().stream().map(ShopProduct::getPrice).min(Comparator.comparing(Integer::valueOf)).orElse(0))

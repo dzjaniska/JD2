@@ -14,4 +14,5 @@ public class ProductOrderDto {
     private Orders orders;
     private Long shopId;
     private Integer quantity;
+    private Long version;
 }

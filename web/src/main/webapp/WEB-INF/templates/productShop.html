@@ -32,7 +32,8 @@
             <p>Price: <span th:text="${shop.price}">Price</span></p>
         </div>
         <div class="col-sm-2">
-            <a class="btn btn-primary btn-lg active" th:href="@{/addToCart(productId=__${product.id}__,shopId=__${shop.id}__)}">Add To Cart</a>
+            <a class="btn btn-primary btn-lg active"
+               th:href="@{/addToCart(productId=__${product.id}__,shopId=__${shop.id}__)}">Add To Cart</a>
         </div>
     </div>
 </div>

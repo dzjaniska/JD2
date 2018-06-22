@@ -71,7 +71,7 @@ public class OptionRepositoryTest {
 
     @Test
     public void findDistinctByCategory() {
-        Long[] ids = {1L,2L};
+        Long[] ids = {1L, 2L};
         List<Option> distinctByIdIn = optionRepository.findDistinctByIdIn(ids);
         System.out.println();
     }

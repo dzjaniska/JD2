@@ -42,7 +42,7 @@ public class ShopServiceImpl implements ShopService {
                 .shopName(shop.getName())
                 .description(shop.getDescription())
                 .shopLogo(shop.getLogo())
-                .rating(shop.getReviews().stream().mapToDouble(ReviewShop::getRating).average().orElse(Double.NaN))
+                .rating(shop.getReviews().stream().mapToDouble(ReviewShop::getRating).average().orElse(0.0))
                 .reviews(shop.getReviews().stream().map(it -> new ReviewDto().builder()
                         .userName(it.getUser().getUserInfo().getName())
                         .userSecondName(it.getUser().getUserInfo().getSurname())

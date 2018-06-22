@@ -11,5 +11,7 @@ public interface ShopProductRepository extends CrudRepository<ShopProduct, Long>
 
     ShopProduct findFirstByProductIdAndShopId(Long productId, Long shopId);
 
+    ShopProduct findFirstByProductIdAndShopIdAndVersion(Long productId, Long shopId, Long version);
+
     List<ShopProduct> findAllByShopIdAndQuantityGreaterThan(Long id, Integer quantity);
 }

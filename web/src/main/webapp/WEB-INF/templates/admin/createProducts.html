@@ -6,6 +6,7 @@
     <div th:replace="fragments/head::imports"></div>
 </head>
 <body>
+<div th:replace="fragments/header::header"></div>
 <div class="container">
     <div class="row">
         <form th:action="@{/admin/createProduct}" method="post" th:object="${product}">

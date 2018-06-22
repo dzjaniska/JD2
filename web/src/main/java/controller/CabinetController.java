@@ -8,7 +8,6 @@ import entity.Customer;
 import entity.Orders;
 import entity.ProductOrder;
 import entity.ShopProduct;
-import entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -86,24 +85,32 @@ public class CabinetController {
         orderDto.getProductOrders().remove(rowId.intValue());
         model.addAttribute("orderDto", orderDto);
         cart.getCartDto().remove(rowId.intValue());
+        orderDto.getProductOrders().clear();
         List<CartProductDto> products = getProductsToShow(orderDto);
+
         model.addAttribute("products", products);
 
         return "customer/cart";
     }
 
     @PostMapping("/customer/cart")
-    public String saveOrder(OrderDto orderDto) {
+    public String saveOrder(Model model, OrderDto orderDto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Customer customer = (Customer) userService.findFirstByLogin(auth.getName());
+
+        List<ProductOrderDto> productOrders = orderDto.getProductOrders();
+        for (ProductOrderDto productOrder : productOrders) {
+            ShopProduct shopProduct = shopProductService.findByProductAndShopAndVersion(
+                    productOrder.getProductId(), productOrder.getShopId(), productOrder.getVersion());
+            shopProduct.setQuantity(shopProduct.getQuantity() - productOrder.getQuantity());
+            shopProductService.save(shopProduct);
+        }
 
         Orders order = orderDto.getOrder();
         order.setOrderTime(LocalDateTime.now());
         order.setUser(customer);
         Orders savedOrder = orderService.save(order);
 
-
-        List<ProductOrderDto> productOrders = orderDto.getProductOrders();
         for (ProductOrderDto productOrder : productOrders) {
             productOrderService.save(new ProductOrder().builder()
                     .orders(savedOrder)
@@ -111,10 +118,6 @@ public class CabinetController {
                     .shop(shopService.findById(productOrder.getShopId()))
                     .quantity(productOrder.getQuantity())
                     .build());
-            ShopProduct shopProduct = shopProductService.findByProductAndShop(
-                    productOrder.getProductId(), productOrder.getShopId());
-            shopProduct.setQuantity(shopProduct.getQuantity() - productOrder.getQuantity());
-            shopProductService.save(shopProduct);
         }
         cart.getCartDto().clear();
 
@@ -145,18 +148,9 @@ public class CabinetController {
         return "customer/cabinet";
     }
 
-    @PostMapping("/customer/cabinet")
-    public String editUserData(Model model, Customer customer) {
-        UserInfo userInfo = customer.getUserInfo();
-        UserInfo save = userInfoService.save(userInfo);
-        userService.save(customer);
-
-        return "/customer/cabinet";
-    }
-
     @ExceptionHandler(Exception.class)
     public String handleException(Model model, Exception e) {
-        model.addAttribute("errorMessage", "Product information has been changed during order. Please, check the new information");
+        model.addAttribute("errorMessage", "Product information has been changed during the order. Please, check the new information");
 
         return "customer/cart";
     }

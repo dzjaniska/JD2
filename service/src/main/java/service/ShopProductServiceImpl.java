@@ -36,12 +36,18 @@ public class ShopProductServiceImpl implements ShopProductService {
                 .price(shopProduct.getPrice())
                 .shopId(shopProduct.getShop().getId())
                 .availableQuantity(shopProduct.getQuantity())
+                .version(shopProduct.getVersion())
                 .build();
     }
 
     @Override
     public ShopProduct findByProductAndShop(Long productId, Long shopId) {
         return shopProductRepository.findFirstByProductIdAndShopId(productId, shopId);
+    }
+
+    @Override
+    public ShopProduct findByProductAndShopAndVersion(Long productId, Long shopId, Long version) {
+        return shopProductRepository.findFirstByProductIdAndShopIdAndVersion(productId, shopId, version);
     }
 
 

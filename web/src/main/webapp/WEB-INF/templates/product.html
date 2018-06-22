@@ -6,6 +6,8 @@
     <div th:replace="fragments/head::imports"></div>
 </head>
 <body>
+<div th:replace="fragments/header::header"></div>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-3"
@@ -14,7 +16,7 @@
         <div class="col-sm">
             <b><p th:text="${product.productName}">Product Name</p></b>
             <p>Rating: <span
-                    th:text="${product.rating != '0.0'}?'No rating':${#numbers.formatDecimal(product.rating,1,2)}">Rating</span>
+                    th:text="${product.rating} == '0.0'?'No rating':${#numbers.formatDecimal(product.rating,1,2)}">Rating</span>
             </p>
             <p>Price range: <span th:text="${product.minPrice}">min</span> - <span
                     th:text="${product.maxPrice}">max</span></p>
@@ -31,7 +33,8 @@
     </div>
     <br>
     <br>
-    Reviews:
+    <span>Reviews: </span>
+    <!--<span th:if="${#lists.size(shop.reviews)} eq 0"> no reviews yet.</span>-->
     <div class="row">
         <div style="border: 1px bisque solid; background-color: aliceblue;opacity: 0.5;" class="col-sm-12"
              th:each="review : ${product.reviews}">
