@@ -118,11 +118,24 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public CatalogPageDto findDistinctAllByCategoryAndOptions(Category category, Long[] ids, String sort, Pageable pageable) {
         List<Option> options = optionRepository.findDistinctByCategory(category);
-        List<Product> products = productRepository.findDistinctAllByCategoryAndOptionsCustom(category, ids, sort, pageable);
-        List<CatalogDto> catalogDtoList = createCatalogDtoList(products);
         Map<Parameter, List<OptionDto>> optionsMap = createOptionDtoMap(options);
+        List<List<Long>> targetIdList = new ArrayList<>();
+        if (ids != null) {
+            targetIdList = getIdsList(createOptionDtoMap(optionRepository.findDistinctByIdIn(ids)));
+        }
+
+        List<Product> products = productRepository.findDistinctAllByCategoryAndOptionsCustom(category, targetIdList, sort, pageable);
+        List<CatalogDto> catalogDtoList = createCatalogDtoList(products);
 
         return new CatalogPageDto(getProductsOnPage(pageable, catalogDtoList), optionsMap, getPagesNumber(pageable, catalogDtoList));
+    }
+
+    private List<List<Long>> getIdsList(Map<Parameter, List<OptionDto>> optionsMap) {
+        List<List<Long>> idsList = new ArrayList<>();
+        for (Map.Entry<Parameter, List<OptionDto>> entry : optionsMap.entrySet()) {
+            idsList.add(entry.getValue().stream().map(OptionDto::getId).collect(Collectors.toList()));
+        }
+        return idsList;
     }
 
     private Map<Parameter, List<OptionDto>> createOptionDtoMap(List<Option> options) {

@@ -22,19 +22,17 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Product> findDistinctAllByCategoryAndOptionsCustom(Category category, Long[] ids, String sort, Pageable pageable) {
+    public List<Product> findDistinctAllByCategoryAndOptionsCustom(Category category, List<List<Long>> ids, String sort, Pageable pageable) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        if (ids == null) {
-            ids = new Long[0];
-        }
-        String queryString = buildQuery(ids);
+        String queryString = buildQuery(ids, sort);
+
         Query query = entityManager.createQuery(queryString, Product.class);
         query.setParameter(1, category);
 
         int j = 2;
-        for (Long id : ids) {
+        for (List<Long> id : ids) {
             query.setParameter(j++, id);
         }
 
@@ -46,21 +44,37 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
         return resultList;
     }
 
-    private String buildQuery(Long[] ids) {
+    private String buildQuery(List<List<Long>> ids, String sort) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("select distinct p from Product p");
-        if (ids.length > 0) {
-            stringBuilder.append(" inner join p.options o inner join p.shopProduct sp where p.category = (?1) and o.id= (?2)");
-            for (int i = 3; i < ids.length + 2; i++) {
-                stringBuilder.append(" and p.id= some (select distinct p from Product p inner join p.options o where p.category = (?1) and o.id= (?" + (i) + ")");
+        for (int i = 2; i < ids.size() + 2; i++) {
+            if (i == ids.size() + 1) {
+                stringBuilder.append(" inner join p.options o inner join p.shopProduct sp where p.category = (?1) and o.id in (?" + (i) + ")");
+            } else {
+                stringBuilder.append(" inner join p.options o inner join p.shopProduct sp where p.category = (?1) and o.id in (?" + (i) + ") and p.id= some " +
+                        "(select distinct p from Product p");
             }
-            for (int i = 0; i < ids.length - 1; i++) {
-                stringBuilder.append(")");
-            }
-        } else {
-            stringBuilder.append(" inner join p.shopProduct sp where p.category = (?1)");
         }
-        stringBuilder.append(" group by p.id having sum(sp.quantity)>0");
+        for (int i = 0; i < ids.size() - 1; i++) {
+            stringBuilder.append(")");
+        }
+        if (ids.size() == 0) {
+            stringBuilder.append(" inner join p.shopProduct sp where p.category = (?1) group by p.id having sum(sp.quantity)>0");
+        } else {
+            stringBuilder.append(" group by p.id having sum(sp.quantity)>0");
+        }
+
+        switch (sort) {
+           /* case "minPrice":
+                stringBuilder.append(" order by min(sp.price)");
+                break;
+            case "maxPrice":
+                stringBuilder.append(" order by min(sp.price) desc");
+                break;*/
+            default:
+                stringBuilder.append(" order by p.id desc");
+                break;
+        }
 
         return stringBuilder.toString();
     }

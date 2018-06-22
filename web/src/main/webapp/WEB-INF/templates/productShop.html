@@ -24,13 +24,15 @@
 
 <div class="container">
     <div class="row" th:each="shop : ${product.shops}">
-        <div class="col-sm-3"
-             th:style="'background:url(' + ${shop.shopLogo} + '); background-size: contain; background-repeat: no-repeat; background-position: center;'">
+        <a class="col-sm-3" th:href="@{/shop(id=${shop.id})}"
+           th:style="'background:url(' + ${shop.shopLogo} + '); background-size: contain; background-repeat: no-repeat; background-position: center;'">
+        </a>
+        <div class="col-sm-7">
+            <p>Shop name: <span th:text="${shop.shopName}">Shop Name</span></p>
+            <p>Price: <span th:text="${shop.price}">Price</span></p>
         </div>
-        <div class="col-sm-9">
-            <p th:text="${shop.shopName}">Shop Name</p>
-            <p th:text="${shop.price}">Price</p>
-            <a th:href="@{/addToCart(productId=__${product.id}__,shopId=__${shop.id}__)}">Add To Cart</a>
+        <div class="col-sm-2">
+            <a class="btn btn-primary btn-lg active" th:href="@{/addToCart(productId=__${product.id}__,shopId=__${shop.id}__)}">Add To Cart</a>
         </div>
     </div>
 </div>

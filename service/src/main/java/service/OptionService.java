@@ -10,4 +10,5 @@ public interface OptionService {
     Option save(Option option);
 
     List<Option> findDistinctByCategory(Category category);
+
 }

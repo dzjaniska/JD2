@@ -64,8 +64,15 @@ public class OptionRepositoryTest {
 
     @Test
     public void findAllByCategory() {
-        List<Option> options = optionRepository.findAllByCategory(Category.RAM);
-        final int expectedSize = 15;
+        List<Option> options = optionRepository.findDistinctByCategory(Category.RAM);
+        final int expectedSize = 8;
         assertEquals(expectedSize, options.size());
+    }
+
+    @Test
+    public void findDistinctByCategory() {
+        Long[] ids = {1L,2L};
+        List<Option> distinctByIdIn = optionRepository.findDistinctByIdIn(ids);
+        System.out.println();
     }
 }
