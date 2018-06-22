@@ -31,17 +31,17 @@ public class AdminController {
     private ProductOrderService productOrderService;
     private ProductService productService;
 
-    @ModelAttribute("shopProduct")
-    public ShopProductDto shopProduct() {
-        return new ShopProductDto();
-    }
-
     @Autowired
     public AdminController(UserService userService, ShopProductService shopProductService, ProductOrderService productOrderService, ProductService productService) {
         this.userService = userService;
         this.shopProductService = shopProductService;
         this.productOrderService = productOrderService;
         this.productService = productService;
+    }
+
+    @ModelAttribute("shopProduct")
+    public ShopProductDto shopProduct() {
+        return new ShopProductDto();
     }
 
     @GetMapping("/admin/admin")

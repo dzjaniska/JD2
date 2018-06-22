@@ -24,10 +24,5 @@ public interface ProductService {
 
     List<CatalogDto> findAllByDescriptionContainingIgnoreCaseCatalog(String name);
 
-    CatalogPageDto findDistinctAllByCategoryAndOptionsOrderByPrice(Category category, Long id, Pageable pageable);
-
-    CatalogPageDto findDistinctAllByCategory(Category category, Pageable pageable);
-
-//    CatalogPageDto findDistinctAllByCategoryAndOptions(Category category, Long[] id, Pageable pageable);
-    CatalogPageDto findDistinctAllByCategoryAndOptions(Category category, Long[] id);
+    CatalogPageDto findDistinctAllByCategoryAndOptions(Category category, Long[] id, String sort, Pageable pageable);
 }

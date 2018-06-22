@@ -50,11 +50,7 @@ public class CatalogController {
         CatalogPageDto products = null;
 
         if (category != null) {
-            if (optionId != null) {
-                products = productService.findDistinctAllByCategoryAndOptions(Category.valueOf(category), optionId);
-            } else {
-                products = productService.findDistinctAllByCategory(Category.valueOf(category), PageRequest.of(page, size));
-            }
+            products = productService.findDistinctAllByCategoryAndOptions(Category.valueOf(category), optionId, sort, PageRequest.of(page, size));
         } else {
             model.addAttribute("greetings", "Welcome to our shop! Please, choose category");
         }

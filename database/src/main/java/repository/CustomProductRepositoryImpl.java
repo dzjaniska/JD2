@@ -3,6 +3,7 @@ package repository;
 import entity.Category;
 import entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,35 +21,48 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
     }
 
     @Override
-    public List<Product> findDistinctAllByCategoryAndOptionsCustom(Category category, Long[] id) {
+    @SuppressWarnings("unchecked")
+    public List<Product> findDistinctAllByCategoryAndOptionsCustom(Category category, Long[] ids, String sort, Pageable pageable) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append("select distinct p from Product p inner join p.options o inner join p.shopProduct sp where p.category = (?1)");
-        stringBuilder.append("select distinct p from Product p inner join p.options o inner join p.shopProduct sp where p.category = (?1) and o.id= (?2) and o.id= (?3)");
-        /*int i = 2;
-
-        for (Long aLong : id) {
-            stringBuilder.append(" and o.id= (?" + i++ + ")");
+        if (ids == null) {
+            ids = new Long[0];
         }
-        String queryString = stringBuilder.append(" group by p.id having sum(sp.quantity)>0").toString();
-*/
-
-        String queryString = stringBuilder.toString();
+        String queryString = buildQuery(ids);
         Query query = entityManager.createQuery(queryString, Product.class);
         query.setParameter(1, category);
-        query.setParameter(2, 1L);
-        query.setParameter(3, 2L);
+
         int j = 2;
-/*
-        for (Long aLong : id) {
-            query.setParameter(j++, aLong);
-        }*/
+        for (Long id : ids) {
+            query.setParameter(j++, id);
+        }
+
         List<Product> resultList = query.getResultList();
+//        final long currentTotal = pageable.getOffset() + pageable.getPageSize();
+//        Page<Product> products = new PageImpl<>(resultList, pageable, currentTotal);
         transaction.commit();
 
         return resultList;
+    }
+
+    private String buildQuery(Long[] ids) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("select distinct p from Product p");
+        if (ids.length > 0) {
+            stringBuilder.append(" inner join p.options o inner join p.shopProduct sp where p.category = (?1) and o.id= (?2)");
+            for (int i = 3; i < ids.length + 2; i++) {
+                stringBuilder.append(" and p.id= some (select distinct p from Product p inner join p.options o where p.category = (?1) and o.id= (?" + (i) + ")");
+            }
+            for (int i = 0; i < ids.length - 1; i++) {
+                stringBuilder.append(")");
+            }
+        } else {
+            stringBuilder.append(" inner join p.shopProduct sp where p.category = (?1)");
+        }
+        stringBuilder.append(" group by p.id having sum(sp.quantity)>0");
+
+        return stringBuilder.toString();
     }
 }
 

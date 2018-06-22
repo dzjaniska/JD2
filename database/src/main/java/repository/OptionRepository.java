@@ -18,6 +18,6 @@ public interface OptionRepository extends CrudRepository<Option, Long> {
 
     List<Option> findAllByProducts(Product product);
 
-    @Query("select o from Product p inner join p.options o where p.category= :category")
-    List<Option> findAllByCategory(@Param("category") Category category);
+    @Query("select distinct o from Product p inner join p.options o where p.category= :category")
+    List<Option> findDistinctByCategory(@Param("category") Category category);
 }

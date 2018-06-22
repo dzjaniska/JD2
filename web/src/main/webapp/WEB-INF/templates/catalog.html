@@ -16,53 +16,75 @@
     </div>
 </div>
 <div class="container" th:if="${greetings}" th:text="${greetings}"></div>
-<div class="container" th:if="${productList} != null" th:each="product:${productList.products}">
-    <div class="row">
-        <a th:href="@{/product(id=__${product.id}__)}" class="col-sm-3">
-            <div th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+<!--<div class="container">
+<select class="custom-select custom-select-lg mb-3" th:value="quantity" onchange="submit()">
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="20">20</option>
+</select>
+</div>-->
+<form action="/catalog" method="get">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="col-sm-12" th:each="option : ${productList.options}">
+                    <b th:text="${option.getKey()}">Option Name</b><br>
+                    <div th:each="value : ${option.getValue()}">
+                        <input type="checkbox" th:name="option" th:value="${value.id}">
+                        <span th:text="${value.value}"></span>
+                    </div>
+                </div>
             </div>
-        </a>
-        <div class="col-sm-7">
-            <p>Product Name: <span th:text="${product.productName}">Product name</span></p>
-            <p th:each="option: ${product.options}">
-                <span th:text="${option.name}">Option name</span> : <span th:text="${option.value}">Option value</span>
-            </p>
-        </div>
-        <div class="col-sm-2">
-            <p>
-                <span th:text="${product.minPrice}">Min price</span> - <span
-                    th:text="${product.maxPrice}">Max price</span>
-            </p>
-            <p>
-                <a th:href="@{/productShop(id=__${product.id}__)}">
-                    <span th:text="${product.offers}"></span> offers </a>
-            </p>
-            <p>Rating:
-                <span th:text="${product.rating}?'No rating':${#numbers.formatDecimal(product.rating,1,2)}">Rating</span>
-            </p>
-            <a th:href="@{/product(id=__${product.id}__)}">Details</a>
+            <div class="col-sm-9" th:if="${productList} != null" th:each="product:${productList.products}">
+                <div class="row">
+                    <a th:href="@{/product(id=__${product.id}__)}" class="col-sm-3">
+                        <div th:style="'background:url(' + ${product.productImage} + '); background-size: contain; background-repeat: no-repeat; background-position: center; height: 200px;'">
+                        </div>
+                    </a>
+                    <div class="col-sm-7">
+                        <p>Product Name: <span th:text="${product.productName}">Product name</span></p>
+                        <p th:each="option: ${product.options}">
+                            <span th:text="${option.name}">Option name</span> : <span
+                                th:text="${option.value}">Option value</span>
+                        </p>
+                    </div>
+                    <div class="col-sm-2">
+                        <p>
+                            <span th:text="${product.minPrice}">Min price</span> - <span
+                                th:text="${product.maxPrice}">Max price</span>
+                        </p>
+                        <p>
+                            <a th:href="@{/productShop(id=__${product.id}__)}">
+                                <span th:text="${product.offers}"></span> offers </a>
+                        </p>
+                        <p>Rating:
+                            <span th:text="${product.rating}?'No rating':${#numbers.formatDecimal(product.rating,1,2)}">Rating</span>
+                        </p>
+                        <a th:href="@{/product(id=__${product.id}__)}">Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row"
+                     th:with="currentUrl=(${#httpServletRequest.requestURI + '?' + #strings.replace(#strings.defaultString(#httpServletRequest.queryString, ''),'&page='+#strings.substringAfter(#strings.defaultString(#httpServletRequest.queryString,''), '&page='),'')})">
+                    <div class="col-sm-1"
+                         th:if="${productList.pages} &gt 1"
+                         th:each="pageN : ${#numbers.sequence(0, productList.pages-1)}">
+                        <a th:href="@{${currentUrl}(page=__${pageN}__)}" th:text="${pageN+1}"></a>
+                    </div>
+                    <div class="col-sm-1"
+                         th:if="${productList.pages} eq 1">
+                        <a th:href="@{${currentUrl}(page=0)}">1</a>
+                    </div>
+                    <div class="col-sm-12"
+                         th:if="${productList.pages} eq 0">
+                        Sorry, products are not found.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<div class="container">
-    <div class="row"
-         th:with="currentUrl=(${#httpServletRequest.requestURI + '?' + #strings.replace(#strings.defaultString(#httpServletRequest.queryString, ''),'&page='+#strings.substringAfter(#strings.defaultString(#httpServletRequest.queryString,''), '&page='),'')})">
-        <div class="col-sm-1"
-             th:if="${productList.pages} &gt 1"
-             th:each="pageN : ${#numbers.sequence(0, productList.pages-1)}">
-            <a th:href="@{${currentUrl}(page=__${pageN}__)}" th:text="${pageN+1}"></a>
-        </div>
-        <div class="col-sm-1"
-             th:if="${productList.pages} eq 1">
-            <a th:href="@{${currentUrl}(page=0)}">1</a>
-        </div>
-        <div class="col-sm-12"
-             th:if="${productList.pages} eq 0">
-            Sorry, products are not found.
-        </div>
-    </div>
-</div>
-
+</form>
 <!--<div th:replace="fragments/footer::footer"></div>-->
 </body>
 </html>

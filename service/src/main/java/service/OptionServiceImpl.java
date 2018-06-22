@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @Transactional
-@CacheConfig(cacheNames = "oprions")
+@CacheConfig(cacheNames = "options")
 public class OptionServiceImpl implements OptionService {
 
     private ProductRepository productRepository;
@@ -35,7 +35,7 @@ public class OptionServiceImpl implements OptionService {
 
     @Override
     @Cacheable
-    public List<Option> findAllByCategory(Category category) {
-        return optionRepository.findAllByCategory(category);
+    public List<Option> findDistinctByCategory(Category category) {
+        return optionRepository.findDistinctByCategory(category);
     }
 }

@@ -9,5 +9,5 @@ public interface OptionService {
 
     Option save(Option option);
 
-    List<Option> findAllByCategory(Category category);
+    List<Option> findDistinctByCategory(Category category);
 }

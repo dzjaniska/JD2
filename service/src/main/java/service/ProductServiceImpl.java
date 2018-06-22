@@ -2,19 +2,22 @@ package service;
 
 import dto.CatalogDto;
 import dto.CatalogPageDto;
+import dto.OptionDto;
 import dto.ProductDto;
 import dto.ReviewDto;
 import dto.ShopDto;
 import dto.ShopProductDto;
 import entity.Category;
+import entity.Option;
+import entity.Parameter;
 import entity.Product;
 import entity.ReviewProduct;
 import entity.ShopProduct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import repository.OptionRepository;
 import repository.ProductRepository;
 
 import java.util.ArrayList;
@@ -30,10 +33,12 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
+    private OptionRepository optionRepository;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, OptionRepository optionRepository) {
         this.productRepository = productRepository;
+        this.optionRepository = optionRepository;
     }
 
     @Override
@@ -111,38 +116,28 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public CatalogPageDto findDistinctAllByCategoryAndOptionsOrderByPrice(Category category, Long id, Pageable pageable) {
-        Page<Product> products = productRepository.findDistinctAllByCategoryAndOptionsOrderByPrice(category, id, pageable);
+    public CatalogPageDto findDistinctAllByCategoryAndOptions(Category category, Long[] ids, String sort, Pageable pageable) {
+        List<Option> options = optionRepository.findDistinctByCategory(category);
+        List<Product> products = productRepository.findDistinctAllByCategoryAndOptionsCustom(category, ids, sort, pageable);
         List<CatalogDto> catalogDtoList = createCatalogDtoList(products);
+        Map<Parameter, List<OptionDto>> optionsMap = createOptionDtoMap(options);
 
-        return new CatalogPageDto(catalogDtoList, products.getTotalPages());
+        return new CatalogPageDto(getProductsOnPage(pageable, catalogDtoList), optionsMap, getPagesNumber(pageable, catalogDtoList));
     }
 
-    @Override
-    public CatalogPageDto findDistinctAllByCategory(Category category, Pageable pageable) {
-        Page<Product> products = productRepository.findDistinctAllByCategory(category, pageable);
-        List<CatalogDto> catalogDtoList = createCatalogDtoList(products);
-
-        return new CatalogPageDto(catalogDtoList, products.getTotalPages());
+    private Map<Parameter, List<OptionDto>> createOptionDtoMap(List<Option> options) {
+        Map<Parameter, List<OptionDto>> optionsMap = new HashMap<>();
+        options.stream().forEach(it -> {
+            if (optionsMap.containsKey(it.getName())) {
+                optionsMap.get(it.getName()).add(new OptionDto(it.getId(), it.getValue()));
+            } else {
+                List<OptionDto> optionDtos = new ArrayList<>();
+                optionDtos.add(new OptionDto(it.getId(), it.getValue()));
+                optionsMap.put(it.getName(), optionDtos);
+            }
+        });
+        return optionsMap;
     }
-
-    @Override
-    public CatalogPageDto findDistinctAllByCategoryAndOptions(Category category, Long[] ids) {
-        List<Product> products = productRepository.findDistinctAllByCategoryAndOptionsCustom(category, ids);
-        List<CatalogDto> catalogDtoList = createCatalogDtoList(products);
-
-        return new CatalogPageDto();
-    }
-
-   /* @Override
-    public CatalogPageDto findDistinctAllByCategoryAndOptions(Category category, Long[] ids, Pageable pageable) {
-        final int size = ids.length;
-        Map<Product, Integer> productMap = addProductsToMap(category, ids);
-        List<Product> productList = getAllOptionsProducts(size, productMap);
-        List<CatalogDto> catalogDtoList = createCatalogDtoList(productList);
-
-        return new CatalogPageDto(getProductsOnPage(pageable, catalogDtoList), getPagesNumber(pageable, catalogDtoList));
-    }*/
 
     private <T extends Iterable<Product>> List<CatalogDto> createCatalogDtoList(T products) {
         List<CatalogDto> catalogDtoList = new ArrayList<>();
@@ -167,33 +162,5 @@ public class ProductServiceImpl implements ProductService {
 
     private int getPagesNumber(Pageable pageable, List<CatalogDto> catalogDtoList) {
         return (int) Math.ceil((double) catalogDtoList.size() / pageable.getPageSize());
-    }
-
-    private Map<Product, Integer> addProductsToMap(Category category, Long[] ids) {
-        Map<Product, Integer> prods = new HashMap<>();
-
-        for (Long optionId : ids) {
-            productRepository.findDistinctAllByCategoryAndOptions(category, optionId).forEach(it -> {
-                if (prods.containsKey(it)) {
-                    prods.put(it, prods.get(it) + 1);
-                } else {
-                    prods.put(it, 1);
-                }
-            });
-        }
-
-        return prods;
-    }
-
-    private List<Product> getAllOptionsProducts(int targetSize, Map<Product, Integer> prods) {
-        List<Product> productList = new ArrayList<>();
-
-        for (Map.Entry<Product, Integer> entry : prods.entrySet()) {
-            if (entry.getValue() == targetSize) {
-                productList.add(entry.getKey());
-            }
-        }
-
-        return productList;
     }
 }
